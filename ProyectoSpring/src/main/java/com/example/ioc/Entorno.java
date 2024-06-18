@@ -1,11 +1,7 @@
 package com.example.ioc;
 
-import org.springframework.stereotype.Service;
+public interface Entorno {
 
-@Service
-public class Entorno {
+	void write(String texto);
 
-	public void write(String texto) {
-		System.out.println(texto);
-	}
 }
