@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("saludaEn")
-@Qualifier("es")
+@Qualifier("en")
 public class SaludaEnImpl implements Saluda {
 
 	Entorno entorno;

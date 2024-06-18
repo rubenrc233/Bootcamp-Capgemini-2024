@@ -1,6 +1,7 @@
 package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,18 +17,20 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 	}
 
 	@Autowired
-	Saluda saludaEs;
+	@Qualifier("es")
+	Saluda saluda;
 	@Autowired
-	Saluda saludaEn;
+	@Qualifier("en")
+	Saluda saluda2;
 	@Autowired
 	Entorno entorno;
 	
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada......");
-		saludaEs.saluda("Mundo");
-		saludaEn.saluda("Mundo");
-		saludaEs.saluda("Mundo");
+		saluda.saluda("Mundo");
+		saluda2.saluda("Mundo");
+		saluda.saluda("Mundo");
 		System.out.println(entorno.getCount());
 
 	}
