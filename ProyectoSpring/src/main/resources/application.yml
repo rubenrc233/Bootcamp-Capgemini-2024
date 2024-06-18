@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ProyectoSpring
+  datasource:
+    url: jdbc:mysql://localhost:3306/sakila
+    username: root
+    password: root
+  profiles:
+    active: en
+server:
+  port: ${PORT:8080}
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
+  level:
+    org:
+      hibernate:
+        SQL: debug
+app:
+  count:
+    init: 0
