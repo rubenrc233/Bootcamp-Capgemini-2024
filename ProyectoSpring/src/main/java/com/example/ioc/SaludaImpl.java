@@ -1,8 +1,10 @@
 package com.example.ioc;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class SaludaImpl implements Saluda {
 
 	Entorno entorno;
@@ -12,6 +14,6 @@ public class SaludaImpl implements Saluda {
 	}
 	@Override
 	public void saluda (String nombre) {
-		entorno.write("Hola "+ nombre);
+		entorno.write("Hola "+ nombre + " ("+entorno.getCount()+")");
 	}
 }

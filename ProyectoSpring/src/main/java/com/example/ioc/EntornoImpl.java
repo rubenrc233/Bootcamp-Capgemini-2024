@@ -14,6 +14,7 @@ public class EntornoImpl implements Entorno {
 		System.out.println(texto);
 		this.count++;
 	}
+	@Override
 	public int getCount() {
 		return this.count;
 	}
