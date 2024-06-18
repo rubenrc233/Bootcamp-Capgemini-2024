@@ -1,13 +1,16 @@
 package com.example.ioc;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component("saludaEs")
 @Profile("es")
 public class SaludaImpl implements Saluda {
-
-	Entorno entorno;
+	
+	public static record SaludaEventRecord(String tipo, String destinatario) {}
+	private ApplicationEventPublisher publisher;
+	private Entorno entorno;
 	
 	public SaludaImpl(Entorno e) {
 		this.entorno = e;
