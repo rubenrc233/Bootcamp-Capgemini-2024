@@ -14,6 +14,9 @@ public class SaludaImpl implements Saluda {
 	}
 	@Override
 	public void saluda (String nombre) {
+		if(nombre == null) {
+			throw new IllegalArgumentException("El nombre es obligatorio");
+		}
 		entorno.write("Hola "+ nombre + " ("+entorno.getCount()+")");
 	}
 }
