@@ -11,9 +11,6 @@ public class MyConfiguration {
 	int countInit() {
 		return 0;
 	}
-//	@Bean
-//	Entorno entorno() {
-//		return new EntornoImpl(0);
-//	}
+
 
 }

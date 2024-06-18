@@ -17,10 +17,8 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 	}
 
 	@Autowired
-	@Qualifier("es")
 	Saluda saluda;
 	@Autowired
-	@Qualifier("en")
 	Saluda saluda2;
 	@Autowired
 	Entorno entorno;
