@@ -8,9 +8,12 @@ import org.springframework.context.annotation.Scope;
 public class MyConfiguration {
 	
 	@Bean
-	@Scope("prototype")
-	Entorno entorno() {
-		return new EntornoImpl(0);
+	int countInit() {
+		return 0;
 	}
+//	@Bean
+//	Entorno entorno() {
+//		return new EntornoImpl(0);
+//	}
 
 }

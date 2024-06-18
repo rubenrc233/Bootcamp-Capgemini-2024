@@ -16,17 +16,18 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 	}
 
 	@Autowired
-	Saluda saluda;
+	Saluda saludaEs;
 	@Autowired
-	Saluda saluda2;
+	Saluda saludaEn;
 	@Autowired
 	Entorno entorno;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada......");
-		saluda.saluda("Mundo");
-		saluda2.saluda("Mundo");
-		saluda.saluda("Mundo");
+		saludaEs.saluda("Mundo");
+		saludaEn.saluda("Mundo");
+		saludaEs.saluda("Mundo");
 		System.out.println(entorno.getCount());
 
 	}

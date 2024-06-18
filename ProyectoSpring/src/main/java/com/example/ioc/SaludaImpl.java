@@ -1,10 +1,10 @@
 package com.example.ioc;
 
-import org.springframework.context.annotation.Scope;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component
-@Scope("prototype")
+@Component("saludaEs")
+@Qualifier("es")
 public class SaludaImpl implements Saluda {
 
 	Entorno entorno;
