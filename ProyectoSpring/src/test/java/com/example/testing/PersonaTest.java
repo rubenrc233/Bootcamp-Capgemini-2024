@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("Pruebas de la clase Persona")
 class PersonaTest {
@@ -44,6 +46,18 @@ class PersonaTest {
 				assertAll("Persona",
 				()-> assertEquals(1, p.getId(),"Comprueba el ID"),
 				() -> assertEquals("Pepe", p.getNombre(),"Comprueba el nombre"),
+				() -> assertTrue(p.getApellidos().isEmpty(),"Comprueba los apellidos"));
+			}
+			
+			@ParameterizedTest(name = "{0} {1}")
+			@CsvSource(value = {"1,Pepe","2,Jose","4,"})
+			@DisplayName("Solo se indica el nombre (parametrizado)")
+			void soloNombreParametrizado(int id, String nombre) {
+				var p = new Persona(id,nombre);
+				assertNotNull(p);
+				assertAll("Persona",
+				()-> assertEquals(id, p.getId(),"Comprueba el ID"),
+				() -> assertEquals(nombre, p.getNombre(),"Comprueba el nombre"),
 				() -> assertTrue(p.getApellidos().isEmpty(),"Comprueba los apellidos"));
 			}
 		}

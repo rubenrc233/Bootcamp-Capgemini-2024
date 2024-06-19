@@ -32,7 +32,10 @@ public class Persona {
 		return nombre;
 	}
 
-	public void setNombre(@NonNull  String nombre) {
+	public void setNombre(@NonNull String nombre) {
+		if("".equals(nombre.trim())){
+			throw new IllegalArgumentException("falta el nombre");
+		}
 		this.nombre = nombre;
 	}
 
