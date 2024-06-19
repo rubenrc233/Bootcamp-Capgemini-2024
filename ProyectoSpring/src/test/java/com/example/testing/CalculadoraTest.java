@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Pruebas de la clase Calculadora")
@@ -40,12 +41,13 @@ class CalculadoraTest {
 			
 			@Test
 			@DisplayName("Suma de dos enteros")
+			@RepeatedTest(value = 5, name = "{displayName} {currentRepetition} / {totalRepetitions}")
 			void testAdd() {
 				var calculation = cal.add(2, 2);
 				assertEquals(4, calculation);
 				assertEquals(3, cal.add(4,-1));
 				assertEquals(-5, cal.add(-4,-1),"caso -4, -2");
-				assertEquals(4, cal.add(4,-1));
+				assertEquals(3, cal.add(4,-1));
 				assertEquals(0, cal.add(0,0));
 
 
