@@ -50,7 +50,7 @@ class PersonaTest {
 			}
 			
 			@ParameterizedTest(name = "{0} {1}")
-			@CsvSource(value = {"1,Pepe","2,Jose","4,"})
+			@CsvSource(value = {"1,Pepe","2,Jose"})
 			@DisplayName("Solo se indica el nombre (parametrizado)")
 			void soloNombreParametrizado(int id, String nombre) {
 				var p = new Persona(id,nombre);
@@ -64,7 +64,12 @@ class PersonaTest {
 		
 		@Nested
 		class Wrong{
-			
+			@ParameterizedTest(name = "{0} {1}")
+			@CsvSource(value = {"4,","5,'      '","6,''"})
+			@DisplayName("Solo se indica el nombre en formatos no aceptados (parametrizado)")
+			void soloNombreParametrizado(int id, String nombre) {
+				assertThrows(Exception.class, () -> new Persona(id, nombre));
+			}
 		}
 	}
 
