@@ -19,7 +19,47 @@ class GildedRoseTest {
 		gr = null;
 		it = new Item[1];
 	}
-
+	@Nested
+	@DisplayName("Pruebas para la funcionalidad de los items generales")
+	class GeneralItemTest{
+		@Nested
+		class CasosPositivos{
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items generales cuando la calidad y la fecha son > 0")
+			@CsvSource(value = {"'patata',1,1"})
+			void testGeneral(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(0, it[0].quality);
+				assertEquals(fecha -1, it[0].sellIn);
+			}
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items generales cuando la calidad es 0 o menos")
+			@CsvSource(value = {"'patata',1,0"})
+			void testCalidadMenor0(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(0, it[0].quality);
+				assertEquals(fecha -1, it[0].sellIn);
+			}
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items generales cuando la fecha es menor que 0")
+			@CsvSource(value = {"'patata',0,1"})
+			void testfechaMenor0(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(0, it[0].quality);
+				assertEquals(fecha-1, it[0].sellIn);
+			}
+		}
+		 @Nested
+		 class CasosNegativos{}
+	}
 	@Nested
 	@DisplayName("Pruebas para la funcionalidad de AgedBrie")
 	class AgedBrieTest{
