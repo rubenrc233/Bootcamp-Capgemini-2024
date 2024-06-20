@@ -1,8 +1,7 @@
-# Bootcamp 2024 Capgemini
+# Bootcamp 2024 Capgemini 
+[![Capgemini img](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)](https://www.capgemini.com/)
 
 ## Repositorio del curso 2024 Ruben Rubio Del Castillo
-![](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)  
-[Capgemini website](https://www.capgemini.com/)
 
 ### ProyectoSpring
 Proyecto sobre los primeros conocimientos impartidos de dicha materia siendo una introduccion
