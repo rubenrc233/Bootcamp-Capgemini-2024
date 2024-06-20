@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -50,6 +51,15 @@ class CalculadoraTest {
 			@Test
 			@DisplayName("Suma negativa de dos reales")
 			void testAddRealValues() {
+				var calculation = cal.add(1, -0.9);
+				assertEquals(0.1, calculation);
+			}
+			
+			
+			@Test
+			@DisplayName("Suma negativa de dos reales")
+			@Smoke
+			void testAddTag() {
 				var calculation = cal.add(1, -0.9);
 				assertEquals(0.1, calculation);
 			}
