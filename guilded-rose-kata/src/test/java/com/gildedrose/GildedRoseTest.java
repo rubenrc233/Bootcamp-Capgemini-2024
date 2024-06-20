@@ -27,12 +27,12 @@ class GildedRoseTest {
 			
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
 			@DisplayName("test para items generales cuando la calidad y la fecha son > 0")
-			@CsvSource(value = {"'patata',1,1"})
+			@CsvSource(value = {"'patata',1,9"})
 			void testGeneral(String nombre, int fecha, int calidad) {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
-				assertEquals(0, it[0].quality);
+				assertEquals(calidad -1, it[0].quality);
 				assertEquals(fecha -1, it[0].sellIn);
 			}
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
