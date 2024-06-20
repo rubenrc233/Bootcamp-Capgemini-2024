@@ -48,13 +48,24 @@ class GildedRoseTest {
 			
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
 			@DisplayName("test para items generales cuando la fecha es menor que 0")
-			@CsvSource(value = {"'patata',0,1"})
+			@CsvSource(value = {"'patata',0,10"})
 			void testfechaMenor0(String nombre, int fecha, int calidad) {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(calidad - 2, it[0].quality);
+				assertEquals(fecha- 1, it[0].sellIn);
+			}
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items generales cuando la fecha es menor que 0 y la calidad no puede ser <0")
+			@CsvSource(value = {"'patata',0,1"})
+			void testfechaMenor0CalidadNoMenor(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
 				assertEquals(0, it[0].quality);
-				assertEquals(fecha-1, it[0].sellIn);
+				assertEquals(fecha- 1, it[0].sellIn);
 			}
 		}
 		 @Nested
