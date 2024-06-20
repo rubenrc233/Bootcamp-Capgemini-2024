@@ -32,6 +32,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad -1, it[0].quality);
 				assertEquals(fecha -1, it[0].sellIn);
 			}
@@ -42,7 +43,8 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
-				assertEquals(0, it[0].quality);
+				assertEquals(nombre, it[0].name);
+				assertEquals(calidad, it[0].quality);
 				assertEquals(fecha -1, it[0].sellIn);
 			}
 			
@@ -53,6 +55,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad - 2, it[0].quality);
 				assertEquals(fecha- 1, it[0].sellIn);
 			}
@@ -64,12 +67,20 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
-				assertEquals(0, it[0].quality);
+				assertEquals(nombre, it[0].name);
+				assertEquals(calidad-1, it[0].quality);
 				assertEquals(fecha- 1, it[0].sellIn);
 			}
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items generales cuando la calidad y la fecha son > 0")
+			@CsvSource(value = {"'patata',1,9"})
+			void testToString(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				assertEquals(nombre + ", " + fecha + ", " + calidad, it[0].toString());
+			}
 		}
-		 @Nested
-		 class CasosNegativos{}
 	}
 	@Nested
 	@DisplayName("Pruebas para la funcionalidad de AgedBrie")
@@ -84,6 +95,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad + 1, it[0].quality);
 				assertEquals(fecha - 1, it[0].sellIn);
 
@@ -96,6 +108,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad + 2, it[0].quality);
 				assertEquals(fecha -1, it[0].sellIn);
 			}
@@ -107,13 +120,11 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad, it[0].quality);
 				assertEquals(fecha -1, it[0].sellIn);
 
 			}
-		}
-		@Nested
-		class CasosNegativos{
 		}
 	}
 	
@@ -130,12 +141,11 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad, it[0].quality);
 				assertEquals(fecha, it[0].sellIn);
 			}
 		}
-		 @Nested
-		 class CasosNegativos{}
 	}
 	
 	@Nested
@@ -151,6 +161,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad + 1, it[0].quality);
 				assertEquals(fecha - 1, it[0].sellIn);
 			}
@@ -162,6 +173,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad + 2, it[0].quality);
 				assertEquals(fecha - 1, it[0].sellIn);
 			}
@@ -173,6 +185,7 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(calidad + 3, it[0].quality);
 				assertEquals(fecha - 1, it[0].sellIn);
 			}
@@ -184,11 +197,10 @@ class GildedRoseTest {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
 				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
 				assertEquals(0, it[0].quality);
 				assertEquals(fecha - 1, it[0].sellIn);
 			}
 		}
-		 @Nested
-		 class CasosNegativos{}
 	}
 }
