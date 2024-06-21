@@ -30,8 +30,10 @@ class GildedRose {
                 }
                 break;
             case "Sulfuras, Hand of Ragnaros":
-                // Legendary item, quality does not change
                 break;
+            case "Conjurado":
+            	decreaseQualityConjured(item);
+            	break;
             default:
                 decreaseQuality(item);
                 break;
@@ -55,6 +57,9 @@ class GildedRose {
                     break;
                 case "Sulfuras, Hand of Ragnaros":
                     break;
+                case "Conjurado":
+                	decreaseQualityConjured(item);
+                	break;
                 default:
                     decreaseQuality(item);
                     break;
@@ -62,7 +67,13 @@ class GildedRose {
         }
     }
 
-    private void increaseQuality(Item item) {
+    private void decreaseQualityConjured(Item item) {
+        if (item.quality > 0) {
+            item.quality = item.quality-2 ;
+        }		
+	}
+
+	private void increaseQuality(Item item) {
         if (item.quality < 50) {
             item.quality++;
         }

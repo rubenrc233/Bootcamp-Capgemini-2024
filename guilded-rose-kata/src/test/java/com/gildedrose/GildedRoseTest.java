@@ -90,7 +90,7 @@ class GildedRoseTest {
 			
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
 			@DisplayName("test para items conjurados cuando la calidad y la fecha son > 0")
-			@CsvSource(value = {"'Conjurado patata',1,9"})
+			@CsvSource(value = {"'Conjurado',1,9"})
 			void testGeneral(String nombre, int fecha, int calidad) {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
@@ -101,7 +101,7 @@ class GildedRoseTest {
 			}
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
 			@DisplayName("test para items conjurados cuando la calidad es 0 o menos")
-			@CsvSource(value = {"'Conjurado patata',1,0"})
+			@CsvSource(value = {"'Conjurado',1,0"})
 			void testCalidadMenor0(String nombre, int fecha, int calidad) {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
@@ -125,7 +125,7 @@ class GildedRoseTest {
 			
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
 			@DisplayName("test para items conjurados cuando la fecha es menor que 0 y la calidad no puede ser <0")
-			@CsvSource(value = {"'Conjurado patata',0,1"})
+			@CsvSource(value = {"'Conjurado',0,1"})
 			void testfechaMenor0CalidadNoMenor(String nombre, int fecha, int calidad) {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
@@ -137,7 +137,7 @@ class GildedRoseTest {
 			
 			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
 			@DisplayName("test para items conjurados cuando la calidad y la fecha son > 0")
-			@CsvSource(value = {"'Conjurado patata',1,9"})
+			@CsvSource(value = {"'Conjurado',1,9"})
 			void testToString(String nombre, int fecha, int calidad) {
 				it[0] = new Item(nombre, fecha, calidad);
 				gr = new GildedRose(it);
