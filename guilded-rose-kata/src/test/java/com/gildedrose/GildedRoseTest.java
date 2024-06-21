@@ -83,6 +83,70 @@ class GildedRoseTest {
 		}
 	}
 	@Nested
+	@DisplayName("Pruebas para la funcionalidad de los items conjurados")
+	class ConjuradoItemTest{
+		@Nested
+		class CasosPositivos{
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items conjurados cuando la calidad y la fecha son > 0")
+			@CsvSource(value = {"'Conjurado patata',1,9"})
+			void testGeneral(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
+				assertEquals(calidad - (1*2), it[0].quality);
+				assertEquals(fecha -1, it[0].sellIn);
+			}
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items conjurados cuando la calidad es 0 o menos")
+			@CsvSource(value = {"'Conjurado patata',1,0"})
+			void testCalidadMenor0(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
+				assertEquals(calidad, it[0].quality);
+				assertEquals(fecha -1, it[0].sellIn);
+			}
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items conjurados cuando la fecha es menor que 0")
+			@CsvSource(value = {"'Conjurado',0,10"})
+			void testfechaMenor0(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
+				assertEquals(calidad - (2*2), it[0].quality);
+				assertEquals(fecha- 1, it[0].sellIn);
+			}
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items conjurados cuando la fecha es menor que 0 y la calidad no puede ser <0")
+			@CsvSource(value = {"'Conjurado patata',0,1"})
+			void testfechaMenor0CalidadNoMenor(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				gr.updateQuality();
+				assertEquals(nombre, it[0].name);
+				assertEquals(calidad-(1*2), it[0].quality);
+				assertEquals(fecha- 1, it[0].sellIn);
+			}
+			
+			@ParameterizedTest(name = "Caso {index} : {0} con fecha {1} y calidad {2}")
+			@DisplayName("test para items conjurados cuando la calidad y la fecha son > 0")
+			@CsvSource(value = {"'Conjurado patata',1,9"})
+			void testToString(String nombre, int fecha, int calidad) {
+				it[0] = new Item(nombre, fecha, calidad);
+				gr = new GildedRose(it);
+				assertEquals(nombre + ", " + fecha + ", " + calidad, it[0].toString());
+			}
+		}
+	}
+	
+	@Nested
 	@DisplayName("Pruebas para la funcionalidad de AgedBrie")
 	class AgedBrieTest{
 		@Nested
