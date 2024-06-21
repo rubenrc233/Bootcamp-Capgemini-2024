@@ -5,5 +5,5 @@
 Project based on the most basic Spring concepts being the first contact  during the Bootcamp with the framework  
 [Spring doc](https://spring.io/)
 ## guilded-rose-java
-Guilded Rose refactoring kata including a test pool 
-[Basic kata code](https://github.com/emilybache/GildedRose-Refactoring-Kata)
+Guilded Rose refactoring kata including a test pool  
+You can access the basic kata code [here](https://github.com/emilybache/GildedRose-Refactoring-Kata)
