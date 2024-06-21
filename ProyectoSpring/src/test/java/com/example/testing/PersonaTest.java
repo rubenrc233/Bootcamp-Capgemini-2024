@@ -1,6 +1,12 @@
 package com.example.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +20,8 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import com.example.Persona;
+import com.example.PersonaRepository;
+import com.example.PersonaService;
 
 @DisplayName("Pruebas de la clase Persona")
 class PersonaTest {
@@ -76,5 +84,22 @@ class PersonaTest {
 		}
 	}
 
+	@Test
+	void ponMayusculasServiceTest() {
+		var p = new Persona(1,"Pepe","Garcia");
+		var dao = mock(PersonaRepository.class);
+		when(dao.getOne(anyInt())).thenReturn(Optional.of(p));
+		var srv = new PersonaService(dao);
+		srv.ponMayus(1);
+		verify(dao).modify(p);
+	}
+	@Test
+	void ponMayusculasExceptionServiceTest() {
+		var p = new Persona(1,"Pepe","Garcia");
+		var dao = mock(PersonaRepository.class);
+		when(dao.getOne(anyInt())).thenReturn(Optional.empty());
+		var srv = new PersonaService(dao);
+		assertThrows(IllegalArgumentException.class, () -> srv.ponMayus(1));
+	}
 
 }
