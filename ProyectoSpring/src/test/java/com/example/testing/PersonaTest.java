@@ -13,6 +13,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import com.example.Persona;
+
 @DisplayName("Pruebas de la clase Persona")
 class PersonaTest {
 	
