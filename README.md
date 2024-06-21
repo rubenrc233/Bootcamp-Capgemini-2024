@@ -2,9 +2,8 @@
 [![Capgemini img](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)](https://www.capgemini.com/)
 
 ## ProyectoSpring
-Proyecto sobre los primeros conocimientos impartidos de dicha materia siendo una introduccion
-a la tecnología y a sus aspéctos mas básicos  
-[Pagina principal de Spring](https://spring.io/)
+Project based on the most basic Spring concepts being the first contact  during the Bootcamp with the framework  
+[Spring doc](https://spring.io/)
 ## guilded-rose-java
-Kata de refactorizacion Guilded Rose con una batería de pruebas  
-[Codigo original de la kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)
+Guilded Rose refactoring kata including a test pool 
+[Basic kata code](https://github.com/emilybache/GildedRose-Refactoring-Kata)
