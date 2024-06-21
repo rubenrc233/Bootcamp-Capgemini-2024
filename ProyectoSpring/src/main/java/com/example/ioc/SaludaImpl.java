@@ -36,4 +36,8 @@ public class SaludaImpl implements Saluda {
 		entorno.write("Hola");
 		onSaluda("saluda", "Sin nombre");
 	}
+	@Override
+	public int getContador() {
+		return entorno.getCount();
+	}
 }

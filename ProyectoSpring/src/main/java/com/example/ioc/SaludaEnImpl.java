@@ -18,4 +18,8 @@ public class SaludaEnImpl implements Saluda {
 	public void saluda (@NonNull String nombre) {
 		entorno.write("Hi "+ nombre);
 	}
+	@Override
+	public int getContador() {
+		return entorno.getCount();
+	}
 }
