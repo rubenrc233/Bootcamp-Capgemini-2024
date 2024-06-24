@@ -32,7 +32,9 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 		daoActorRepository.deleteById(202);
 		
 		daoActorRepository.findAll().forEach(ac -> System.out.println(ac.toString()));
-		
+		daoActorRepository.findAll((root,query,builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),200));
+		daoActorRepository.findAll((root,query,builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),10));
+
 	}
 
 
