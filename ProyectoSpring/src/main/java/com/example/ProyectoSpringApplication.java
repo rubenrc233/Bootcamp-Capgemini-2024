@@ -29,6 +29,7 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 		
 		//var actor = new Actor(0,"Jose","Gonzalez");
 		//System.out.println("Actor guardado: "+ daoActorRepository.save(actor));
+		daoActorRepository.deleteById(202);
 		
 		daoActorRepository.findAll().forEach(ac -> System.out.println(ac.toString()));
 		
