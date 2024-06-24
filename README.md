@@ -2,7 +2,7 @@
 [![Capgemini img](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)](https://www.capgemini.com/)
 
 ## ProyectoSpring
-Project based on the most basic Spring concepts being the first contact  during the Bootcamp with the framework  
+Spring project with all the functionality developed during the bootcamp
 [Spring doc](https://spring.io/)
 ## guilded-rose-java
 Guilded Rose refactoring kata including a test pool  
