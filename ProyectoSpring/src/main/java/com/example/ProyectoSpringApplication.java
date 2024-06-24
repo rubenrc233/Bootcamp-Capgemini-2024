@@ -20,8 +20,10 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		var item = daoActorRepository.findById(202);
+		var item = daoActorRepository.findById(201);
 		if(item.isPresent()) {
+			var actor =  item.get();
+			actor.getFilmActors().forEach(f -> System.out.println("Titulo: " + f.getFilm().getTitle()));
 			System.out.println("Actor encontrado: " + item.toString());
 		} else {
 			System.out.println("Actor no encontrado");
@@ -29,11 +31,9 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 		
 		//var actor = new Actor(0,"Jose","Gonzalez");
 		//System.out.println("Actor guardado: "+ daoActorRepository.save(actor));
-		daoActorRepository.deleteById(202);
+
+
 		
-		daoActorRepository.findAll().forEach(ac -> System.out.println(ac.toString()));
-		daoActorRepository.findAll((root,query,builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),200));
-		daoActorRepository.findAll((root,query,builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),10));
 
 	}
 
