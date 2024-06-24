@@ -9,4 +9,4 @@ Guilded Rose refactoring kata including a test pool
 You can access the basic kata code [here](https://github.com/emilybache/GildedRose-Refactoring-Kata)
 ## JPA TestingProject
 Project developed for researching about JPA and test the functionality that offers
-[JPA doc](https://spring.io/projects/spring-data-jpa)
+[JPA doc] (https://spring.io/projects/spring-data-jpa)
