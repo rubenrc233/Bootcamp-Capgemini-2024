@@ -1,4 +1,4 @@
-package com.example;
+package com.example.persona;
 
 import java.util.Optional;
 

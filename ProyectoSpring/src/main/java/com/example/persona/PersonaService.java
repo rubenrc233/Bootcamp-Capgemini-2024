@@ -1,4 +1,4 @@
-package com.example;
+package com.example.persona;
 
 public class PersonaService {
 	

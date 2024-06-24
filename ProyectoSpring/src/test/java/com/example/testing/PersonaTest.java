@@ -19,9 +19,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.example.Persona;
-import com.example.PersonaRepository;
-import com.example.PersonaService;
+import com.example.persona.Persona;
+import com.example.persona.PersonaRepository;
+import com.example.persona.PersonaService;
 
 @DisplayName("Pruebas de la clase Persona")
 class PersonaTest {
