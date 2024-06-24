@@ -7,3 +7,5 @@ Project based on the most basic Spring concepts being the first contact  during 
 ## guilded-rose-java
 Guilded Rose refactoring kata including a test pool  
 You can access the basic kata code [here](https://github.com/emilybache/GildedRose-Refactoring-Kata)
+## JPA TestingProject
+Project developed for researching about JPA and test the functionality that offers
