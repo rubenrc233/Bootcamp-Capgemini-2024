@@ -1,7 +1,10 @@
 # Bootcamp Java (Spring, JavaScript, NodeJS, Angular) 2024 Capgemini
 ![Capgemini](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/rubenrc233/Bootcamp-Capgemini-2024/ci.yml?branch=main)](https://github.com/rubenrc233/Bootcamp-Capgemini-2024/actions)
+[![License](https://img.shields.io/github/license/rubenrc233/Bootcamp-Capgemini-2024)](LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/rubenrc233/Bootcamp-Capgemini-2024)](https://github.com/rubenrc233/Bootcamp-Capgemini-2024/graphs/contributors)
 
-Welcome to the Bootcamp Capgemini 2024 repository. This repository contains various projects and exercises developed during the bootcamp to enhance my skills in Java, Spring, JavaScript, NodeJS, and Angular.
+Welcome to the Bootcamp Capgemini 2024 repository. This repository contains various projects and exercises developed during the bootcamp to enhance your skills in Java, Spring, JavaScript, NodeJS, and Angular.
 
 ## Projects Overview
 
@@ -18,7 +21,7 @@ A project focusing on the refactoring of the Guilded Rose kata. It includes a co
 - **Kata Code:** [Guilded Rose Refactoring Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)
 
 ### 3. JPA Testing Project
-This project is developed to research and explore the capabilities of Java Persistence API (JPA). It includes various examples and test cases.
+This project is developed to research and explore the capabilities of Java Persistence API (JPA). It includes various examples and test cases to demonstrate JPA functionality.
 
 - **Technologies Used:** JPA, Hibernate
 - **Documentation:** [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
