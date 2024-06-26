@@ -23,6 +23,10 @@ public class FilmActorPK extends EntityBase<FilmActorPK> implements Serializable
 
 	public FilmActorPK() {
 	}
+	public FilmActorPK(int filmId, int actorId) {
+		this.actorId = actorId;
+		this.filmId = filmId;
+	}
 	public int getActorId() {
 		return this.actorId;
 	}

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -207,49 +208,58 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public void setLanguageVO(Language languageVO) {
 		this.languageVO = languageVO;
 	}
+	
+	//Actores
 
-	public List<FilmActor> getFilmActors() {
-		return this.filmActors;
+	public List<Actor> getActors() {
+		return this.filmActors.stream().map(item -> item.getActor()).toList();
+	}
+	public void setActors(List<Actor> source) {
+		if(filmActors == null || !filmActors.isEmpty()) clearActors();
+		source.forEach(item -> addActor(item));
+	}
+	public void clearActors() {
+		filmActors = new ArrayList<FilmActor>() ;
+	}
+	public void addActor(Actor actor) {
+		FilmActor filmActor = new FilmActor(this, actor);
+		filmActors.add(filmActor);
+	}
+	public void addActor(int actorId) {
+		addActor(new Actor(actorId));
+	}
+	public void removeActor(Actor actor) {
+		var filmActor = filmActors.stream().filter(item -> item.getActor().equals(actor)).findFirst();
+		if(filmActor.isEmpty())
+			return;
+		filmActors.remove(filmActor.get());
 	}
 
-	public void setFilmActors(List<FilmActor> filmActors) {
-		this.filmActors = filmActors;
+	
+	//Categorias 
+	
+	public List<Category> getCategories() {
+		return this.filmCategories.stream().map(item -> item.getCategory()).toList();
 	}
-
-	public FilmActor addFilmActor(FilmActor filmActor) {
-		getFilmActors().add(filmActor);
-		filmActor.setFilm(this);
-
-		return filmActor;
+	public void setCategories(List<Category> source) {
+		if(filmCategories == null || !filmCategories.isEmpty()) clearCategories();
+		source.forEach(item -> addCategory(item));
 	}
-
-	public FilmActor removeFilmActor(FilmActor filmActor) {
-		getFilmActors().remove(filmActor);
-		filmActor.setFilm(null);
-
-		return filmActor;
+	public void clearCategories() {
+		filmCategories = new ArrayList<FilmCategory>() ;
 	}
-
-	public List<FilmCategory> getFilmCategories() {
-		return this.filmCategories;
+	public void addCategory(Category item) {
+		FilmCategory filmCategory = new FilmCategory();
+		filmCategories.add(filmCategory);
 	}
-
-	public void setFilmCategories(List<FilmCategory> filmCategories) {
-		this.filmCategories = filmCategories;
+	public void addCategory(int id) {
+		addCategory(new Category(id));
 	}
-
-	public FilmCategory addFilmCategory(FilmCategory filmCategory) {
-		getFilmCategories().add(filmCategory);
-		filmCategory.setFilm(this);
-
-		return filmCategory;
-	}
-
-	public FilmCategory removeFilmCategory(FilmCategory filmCategory) {
-		getFilmCategories().remove(filmCategory);
-		filmCategory.setFilm(null);
-
-		return filmCategory;
+	public void removeCategory(Category ele) {
+		var filmCategory = filmCategories.stream().filter(item -> item.getCategory().equals(ele)).findFirst();
+		if(filmCategory.isEmpty())
+			return;
+		filmCategories.remove(filmCategory.get());
 	}
 
 	@Override
@@ -279,6 +289,38 @@ public class Film extends EntityBase<Film> implements Serializable {
 		return "Film [filmId=" + filmId + ", description=" + description + ", lastUpdate=" + lastUpdate + ", length="
 				+ length + ", rating=" + rating + ", releaseYear=" + releaseYear + ", rentalDuration=" + rentalDuration
 				+ ", rentalRate=" + rentalRate + ", replacementCost=" + replacementCost + ", title=" + title + "]";
+	}
+
+
+
+	public Film combine(Film film) {
+		film.title = title;
+		film.description = description;
+		film.releaseYear = releaseYear;
+		film.language = language;
+		film.languageVO = languageVO;
+		film.rentalDuration = rentalDuration;
+		film.rentalRate = rentalRate;
+		film.length = length;
+		film.replacementCost = replacementCost;
+		film.rating = rating;
+		
+		film.getActors().stream()
+			.filter(item -> !getActors().contains(item))
+			.forEach(item -> film.removeActor(item));
+
+		getActors().stream()
+			.filter(item -> !film.getActors().contains(item))
+			.forEach(item -> film.addActor(item));
+
+		film.getCategories().stream()
+			.filter(item -> !getCategories().contains(item))
+			.forEach(item -> film.removeCategory(item));
+
+		getCategories().stream()
+			.filter(item -> !film.getCategories().contains(item))
+			.forEach(item -> film.addCategory(item));
+		return film;
 	}
 	
 	

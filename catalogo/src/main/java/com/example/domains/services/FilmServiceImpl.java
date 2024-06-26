@@ -15,6 +15,8 @@ import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
 
+import jakarta.transaction.Transactional;
+
 @Service
 
 public class FilmServiceImpl implements FilmService {
@@ -60,48 +62,48 @@ public class FilmServiceImpl implements FilmService {
 	public Optional<Film> getOne(Integer id) {
 		return dao.findById(id);
 	}
-
 	@Override
+	@Transactional
 	public Film add(Film item) throws DuplicateKeyException, InvalidDataException {
-		if(item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		if(item.isInvalid()) {
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		}
-		if(item.getFilmId() != 0 && dao.existsById(item.getFilmId())) {
-			throw new DuplicateKeyException("Ya existe");
-		}
-		return dao.save(item);
+		if(dao.existsById(item.getFilmId()))
+			throw new DuplicateKeyException(item.getErrorsMessage());
+		var actores = item.getActors();
+		var categorias = item.getCategories();
+		item.clearActors();
+		item.clearCategories();
+		var newItem = dao.save(item);
+		newItem.setActors(actores);
+		newItem.setCategories(categorias);
+		return dao.save(newItem);
 	}
 
 	@Override
+	@Transactional
 	public Film modify(Film item) throws NotFoundException, InvalidDataException {
-		if(item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		if(item.isInvalid()) {
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		}
-		if(item.getFilmId() == 0 && !dao.existsById(item.getFilmId())) {
-			throw new NotFoundException("No existe");
-		}
-		return dao.save(item);
+		var leido = dao.findById(item.getFilmId());
+		if(leido.isEmpty())
+			throw new NotFoundException();
+		return dao.save(item.combine(leido.get()));
 	}
 
 	@Override
 	public void delete(Film item) throws InvalidDataException {
-		if(item == null) {
+		if(item == null)
 			throw new InvalidDataException("No puede ser nulo");
-		}
-		dao.delete(item);
-		
+		deleteById(item.getFilmId());
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		dao.deleteById(id);
-		
 	}
 
 }

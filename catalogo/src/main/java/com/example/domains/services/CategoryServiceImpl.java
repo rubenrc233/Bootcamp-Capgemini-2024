@@ -64,28 +64,24 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category add(Category item) throws DuplicateKeyException, InvalidDataException {
 		if(item == null) {
-			throw new InvalidDataException("No puede ser nulo");
+			throw new InvalidDataException("Faltan datos");
 		}
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getCategoryId() != 0 && dao.existsById(item.getCategoryId())) {
-			throw new DuplicateKeyException("Ya existe");
-		}
+		if(getOne(item.getCategoryId()).isPresent())
+			throw new DuplicateKeyException("Ya existe esa categoria");
 		return dao.save(item);
 	}
 
 	@Override
 	public Category modify(Category item) throws NotFoundException, InvalidDataException {
-		if(item == null) {
-			throw new InvalidDataException("No puede ser nulo");
-		}
-		if(item.isInvalid()) {
+		if(item == null)
+			throw new InvalidDataException("Faltan los datos");
+		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
-		}
-		if(item.getCategoryId() == 0 && !dao.existsById(item.getCategoryId())) {
-			throw new NotFoundException("No existe");
-		}
+		if(getOne(item.getCategoryId()).isEmpty())
+			throw new NotFoundException();
 		return dao.save(item);
 	}
 
