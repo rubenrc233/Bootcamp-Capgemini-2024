@@ -1,4 +1,4 @@
-package com.example.domains.entities.models;
+package com.example.domains.entities.dtos;
 
 import java.io.Serializable;
 
