@@ -77,7 +77,8 @@ class FilmServiceTest {
         @Test
         @DisplayName("Obtener por proyección con paginación")
         void testGetByProjectionWithPageable() {
-            Page<Object> page = mock(Page.class);
+            @SuppressWarnings("unchecked")
+			Page<Object> page = mock(Page.class);
             when(dao.findAllBy(any(Pageable.class), any())).thenReturn(page);
             Page<Object> result = service.getByProjection(Pageable.unpaged(), Object.class);
             assertNotNull(result);
@@ -101,7 +102,8 @@ class FilmServiceTest {
         @Test
         @DisplayName("Obtener todos con paginación")
         void testGetAllWithPageable() {
-            Page<Film> page = mock(Page.class);
+            @SuppressWarnings("unchecked")
+			Page<Film> page = mock(Page.class);
             when(dao.findAll(any(Pageable.class))).thenReturn(page);
             Page<Film> result = service.getAll(Pageable.unpaged());
             assertNotNull(result);
