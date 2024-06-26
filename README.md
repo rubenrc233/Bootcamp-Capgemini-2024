@@ -10,5 +10,5 @@ You can access the basic kata code [here](https://github.com/emilybache/GildedRo
 ## JPA TestingProject
 Project developed for researching about JPA and test the functionality that offers
 [JPA doc](https://spring.io/projects/spring-data-jpa)
-##catalogo
+## catalogo
 Project created to practice JPA concepts, the application of the layered model, and its testability.
