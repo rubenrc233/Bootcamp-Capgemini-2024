@@ -1,5 +1,5 @@
 # Bootcamp Java (Spring, JavaScript, NodeJS, Angular) 2024 Capgemini
-![Capgemini](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)
+![Capgemini](https://www.capgemini.com/wp-content/themes/capgemini2020/assets/images/logo.svg)  
 [![Build Status](https://img.shields.io/github/actions/workflow/status/rubenrc233/Bootcamp-Capgemini-2024/ci.yml?branch=main)](https://github.com/rubenrc233/Bootcamp-Capgemini-2024/actions)
 [![License](https://img.shields.io/github/license/rubenrc233/Bootcamp-Capgemini-2024)](LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/rubenrc233/Bootcamp-Capgemini-2024)](https://github.com/rubenrc233/Bootcamp-Capgemini-2024/graphs/contributors)
