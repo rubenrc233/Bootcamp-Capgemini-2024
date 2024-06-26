@@ -1,6 +1,10 @@
-package com.example.domains.entities;
+package com.example.domains.services;
 
 import com.example.domains.contracts.repositories.FilmRepository;
+import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
+import com.example.domains.entities.Film;
+import com.example.domains.entities.Language;
 import com.example.domains.services.FilmServiceImpl;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
