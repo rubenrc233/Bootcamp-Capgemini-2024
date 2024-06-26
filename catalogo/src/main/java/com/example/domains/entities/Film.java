@@ -249,7 +249,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 		filmCategories = new ArrayList<FilmCategory>() ;
 	}
 	public void addCategory(Category item) {
-		FilmCategory filmCategory = new FilmCategory();
+		FilmCategory filmCategory = new FilmCategory(this,item);
 		filmCategories.add(filmCategory);
 	}
 	public void addCategory(int id) {
