@@ -32,6 +32,18 @@ A project created to practice JPA concepts, application of the layered architect
 - **Technologies Used:** JPA, Spring Boot
 - **Purpose:** Enhance understanding of JPA and layered architecture.
 
+### Batch Processing in Java (lotes-java)
+A project to demonstrate batch processing using Java. This project includes examples of reading, processing, and writing large amounts of data in batch mode.
+
+- **Technologies Used:** Java, Spring Batch
+- **Purpose:** Learn and implement batch processing concepts.
+
+### Batch Processing in XML (lotes-xml)
+A project to demonstrate batch processing using XML configurations. This project provides examples of configuring batch jobs using XML.
+
+- **Technologies Used:** Java, Spring Batch, XML
+- **Purpose:** Practice batch processing with XML configurations.
+
 ## Getting Started
 
 To get started with any of the projects:
