@@ -13,6 +13,12 @@ import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
 import com.example.webservice.schema.AddRequest;
 import com.example.webservice.schema.AddResponse;
+import com.example.webservice.schema.DivideRequest;
+import com.example.webservice.schema.DivideResponse;
+import com.example.webservice.schema.MultiplyRequest;
+import com.example.webservice.schema.MultiplyResponse;
+import com.example.webservice.schema.SubtractRequest;
+import com.example.webservice.schema.SubtractResponse;
 
 @SpringBootApplication
 public class ProyectoSpringApplication implements CommandLineRunner{
@@ -36,14 +42,36 @@ public class ProyectoSpringApplication implements CommandLineRunner{
 	
 	@Bean
 	CommandLineRunner lookup(Jaxb2Marshaller marshaller) {
-		return args -> {		
-			WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-			var request = new AddRequest();
-			request.setOp1(2);
-			request.setOp2(3);
-			var response = (AddResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
-					 request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
-			System.err.println("Calculo remoto --> " + response.getAddResult());
-		};
+        return args -> {        
+            WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+
+            var addRequest = new AddRequest();
+            addRequest.setOp1(2);
+            addRequest.setOp2(3);
+            var addResponse = (AddResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+                    addRequest, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+            System.err.println("Add Result --> " + addResponse.getAddResult());
+
+            var subtractRequest = new SubtractRequest();
+            subtractRequest.setOp1(5);
+            subtractRequest.setOp2(3);
+            var subtractResponse = (SubtractResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+                    subtractRequest, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+            System.err.println("Subtract Result --> " + subtractResponse.getSubtractResult());
+
+            var multiplyRequest = new MultiplyRequest();
+            multiplyRequest.setOp1(4);
+            multiplyRequest.setOp2(3);
+            var multiplyResponse = (MultiplyResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+                    multiplyRequest, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+            System.err.println("Multiply Result --> " + multiplyResponse.getMultiplyResult());
+
+            var divideRequest = new DivideRequest();
+            divideRequest.setOp1(10);
+            divideRequest.setOp2(2);
+            var divideResponse = (DivideResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+                    divideRequest, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+            System.err.println("Divide Result --> " + divideResponse.getDivideResult());
+        };
 	}
 }
