@@ -40,7 +40,7 @@ public class CalculatorEndpoint {
         var result = new MultiplyResponse();
         result.setMultiplyResult(request.getOp1() * request.getOp2());
         return result;
-    }
+    } 
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "divideRequest")
     @ResponsePayload
