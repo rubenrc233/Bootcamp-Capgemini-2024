@@ -10,6 +10,10 @@ import lombok.Data;
 
 @Data @AllArgsConstructor
 public class ActorDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@JsonProperty("id")
 	private int actorId;
 	@JsonProperty("nombre")

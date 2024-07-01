@@ -1,14 +1,14 @@
 package com.example.domains.entities.models;
 
 import java.io.Serializable;
-
-import com.example.domains.entities.Actor;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 public class ActorOtroDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nombre;
 	private String apellidos;
