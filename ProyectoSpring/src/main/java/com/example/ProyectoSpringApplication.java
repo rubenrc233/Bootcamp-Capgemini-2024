@@ -12,15 +12,13 @@ public class ProyectoSpringApplication implements CommandLineRunner{
         SpringApplication.run(ProyectoSpringApplication.class, args);
     }
 
- 
-
     @Bean
     CommandLineRunner lookup(CalculatorProxy client) {
         return args -> { 
-            System.err.println("Add Result --> " + client.add(2, 3));
-            System.err.println("Subtract Result --> " + client.subtract(2, 3));  
+            System.err.println("Add Result --> " + client.add(0.9, 3));
+            System.err.println("Subtract Result --> " + client.subtract(1, 0.9));  
             System.err.println("Multiply Result --> " + client.multiply(2, 3));  
-            System.err.println("Divide Result --> " + client.divide(10, 5));
+            System.err.println("Divide Result --> " + client.divide(1, 2));
         };
     }
 
