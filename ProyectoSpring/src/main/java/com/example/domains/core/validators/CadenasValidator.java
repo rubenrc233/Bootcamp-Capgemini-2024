@@ -1,4 +1,4 @@
-package com.example.domains.core.contracts.validators;
+package com.example.domains.core.validators;
 
 public final class CadenasValidator {
 	private CadenasValidator() {

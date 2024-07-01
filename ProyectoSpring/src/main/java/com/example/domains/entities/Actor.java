@@ -12,7 +12,7 @@ import java.util.Objects;
 
 import org.hibernate.tuple.entity.EntityBasedAssociationAttribute;
 
-import com.example.domains.core.contracts.entities.EntityBase;
+import com.example.domains.core.entities.EntityBase;
 
 
 /**

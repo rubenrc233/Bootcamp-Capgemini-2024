@@ -27,53 +27,46 @@ import com.example.exceptions.NotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/actors/v1")
+@RequestMapping("/api/actores/v1")
 public class ActorResource {
-	
-	private ActorService service;
-	
-	public ActorResource(ActorService sv) {
-		this.service = sv;
+	private ActorService srv;
+
+	public ActorResource(ActorService srv) {
+		this.srv = srv;
 	}
 	
-	 @GetMapping
-	 public List<ActorShort> getAll(){
-		 return service.getByProjection(ActorShort.class);
-	 }
-	 
-	 @GetMapping(path = "/{id}")
-	 public ActorDTO getOne(@PathVariable int id) throws NotFoundException{
-		 var item = service.getOne(id);
-		 if(item.isEmpty()) {
-			 throw new NotFoundException();
-		 }
-		 return ActorDTO.from(item.get());
-		 
-	 }
-	 
-	 @PostMapping
-	 public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException{
-		 var newItem = service.add(ActorDTO.from(item));
-		 URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newItem.getActorId()).toUri();
-		 return ResponseEntity.created(location).build();
-	 }
+	@GetMapping
+	public List<ActorShort> getAll() {
+		return srv.getByProjection(ActorShort.class);
+	}
+	
+	@GetMapping(path = "/{id}")
+	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		return ActorDTO.from(item.get());
+	}
+	
+	@PostMapping
+	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srv.add(ActorDTO.from(item));
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+			.buildAndExpand(newItem.getActorId()).toUri();
+		return ResponseEntity.created(location).build();
+	}
 
-	 @PutMapping(path = "/{id}")
-	 @ResponseStatus(HttpStatus.NO_CONTENT)
-	 public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
-		 if(id != item.getActorId()) {
-			 throw new BadRequestException("Los ids no coinciden");	
-		 }
-		 service.modify(ActorDTO.from(item));
-		 
-	 }
-	 
-	 @DeleteMapping(path = "/{id}")
-	 @ResponseStatus(HttpStatus.NO_CONTENT)
-	 public void delete(@PathVariable int id) {
-		 service.deleteById(id);
-		 
-	 }
-	 
+	@PutMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
+		if(id != item.getActorId())
+			throw new BadRequestException("No coinciden los identificadores");
+		srv.modify(ActorDTO.from(item));
+	}
+
+	@DeleteMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable int id) {
+		srv.deleteById(id);
+	}
 }
-
