@@ -2,9 +2,12 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
@@ -106,6 +109,37 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.rentalDuration = rentalDuration;
 		this.rentalRate = rentalRate;
 		this.replacementCost = replacementCost;
+	}
+	
+	public Film(int filmId, String description,Integer length, @Size(max = 1, min = 1) String rating, @NotBlank byte rentalDuration,
+			@NotBlank BigDecimal rentalRate, @NotBlank BigDecimal replacementCost,String title,Language language,
+			Language languageVO,List<Actor> actors, List<Category> categories) {
+		this.filmId = filmId;
+		this.length = length;
+		this.rating = rating;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+	}
+	
+	public Film(int filmId, @NotBlank @Size(max = 128) String title, String description, @Min(1895) Short releaseYear,
+			@NotNull Language language, Language languageVO, @Positive Byte rentalDuration,
+			@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
+			@Positive Integer length,
+			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost,
+			String rating) {
+		super();
+		this.filmId = filmId;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.language = language;
+		this.languageVO = languageVO;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.length = length;
+		this.replacementCost = replacementCost;
+		this.rating = rating;
 	}
 
 
