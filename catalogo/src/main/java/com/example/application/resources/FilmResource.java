@@ -39,8 +39,7 @@ public class FilmResource {
 	private FilmService srv;
 
 	@GetMapping(params = "page")
-	public Page<FilmShortDTO> getAll(Pageable pageable,
-			@RequestParam(defaultValue = "short") String mode) {
+	public Page<FilmShortDTO> getAll(Pageable pageable,@RequestParam(defaultValue = "short") String mode) {
 		return srv.getByProjection(pageable, FilmShortDTO.class);
 	}
 
@@ -60,7 +59,7 @@ public class FilmResource {
 
 	@GetMapping(path = "/{id}/reparto")
 	@Transactional
-	public List<ActorDTO> getFilms(@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id)throws Exception {
+	public List<ActorDTO> getFilms(@PathVariable int id)throws Exception {
 		Optional<Film> rslt = srv.getOne(id);
 		if (rslt.isEmpty())
 			throw new NotFoundException();
@@ -69,8 +68,7 @@ public class FilmResource {
 
 	@GetMapping(path = "/{id}/categorias")
 	@Transactional
-	public List<Category> getCategories(
-			@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id) throws Exception {
+	public List<Category> getCategories(@PathVariable int id) throws Exception {
 		Optional<Film> rslt = srv.getOne(id);
 		if (rslt.isEmpty())
 			throw new NotFoundException();
@@ -90,9 +88,7 @@ public class FilmResource {
 
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public FilmDTO edit(
-			@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id,
-			@Valid @RequestBody FilmDTO item) throws Exception {
+	public FilmDTO edit(@PathVariable int id,@Valid @RequestBody FilmDTO item) throws Exception {
 		if (item.getFilmId() != id)
 			throw new BadRequestException("No coinciden los identificadores");
 		return FilmDTO.from(srv.modify(FilmDTO.from(item)));
