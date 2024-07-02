@@ -66,7 +66,7 @@ public class CategoryResource {
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody Category item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		if(item == null)
-			throw new BadRequestException("No estan todos los datos");
+			throw new BadRequestException("Faltan los datos");
 		var newItem = srv.add(item);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 			.buildAndExpand(newItem.getCategoryId()).toUri();
@@ -77,9 +77,9 @@ public class CategoryResource {
 	@PutMapping("/{id}")
 	public Category update(@PathVariable int id, @Valid @RequestBody Category item) throws BadRequestException, NotFoundException, InvalidDataException {
 		if(item == null)
-			throw new BadRequestException("No estan todos los datos");
+			throw new BadRequestException("Faltan los datos");
 		if(id != item.getCategoryId())
-			throw new BadRequestException("No coinciden las ids");
+			throw new BadRequestException("No coinciden los identificadores");
 		return srv.modify(item);	
 	}
 
