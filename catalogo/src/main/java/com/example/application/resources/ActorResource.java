@@ -41,12 +41,13 @@ public class ActorResource {
 		this.srv = srv;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@GetMapping(path = "/v1")
 	public List getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
 		if("short".equals(modo))
 			return srv.getByProjection(ActorShort.class);
 		else
-			return srv.getAll(); // srv.getByProjection(ActorDTO.class);
+			return srv.getAll();
 	}
 	
 	@GetMapping(path = "/v2")
