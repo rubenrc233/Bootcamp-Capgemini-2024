@@ -2,6 +2,7 @@ package com.example.application.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -147,6 +148,15 @@ public class FilmResource {
 		else {
 			return query.map(e -> FilmDTO.from(e)).toList();
 		}
+	}
+	
+	@GetMapping(path = "/clasificaciones")
+	@Operation(summary = "Listado de las clasificaciones por edades")
+	public List<Map<String, String>> getClasificaciones() {
+		return List.of(Map.of("key", "G", "value", "Todos los públicos"),
+				Map.of("key", "PG", "value", "Guía paternal sugerida"),
+				Map.of("key", "PG-13", "value", "Guía paternal estricta"), Map.of("key", "R", "value", "Restringido"),
+				Map.of("key", "NC-17", "value", "Prohibido para audiencia de 17 años y menos"));
 	}
 
 }
