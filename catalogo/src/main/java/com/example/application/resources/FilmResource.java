@@ -6,9 +6,11 @@ import java.util.Optional;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,11 +27,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.Film.Rating;
 import com.example.domains.entities.dtos.ActorDTO;
 import com.example.domains.entities.dtos.FilmDTO;
 import com.example.domains.entities.dtos.FilmShortDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.NotFoundException;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 
 @RestController
@@ -42,6 +47,7 @@ public class FilmResource {
 	public Page<FilmShortDTO> getAll(Pageable pageable,@RequestParam(defaultValue = "short") String mode) {
 		return srv.getByProjection(pageable, FilmShortDTO.class);
 	}
+	
 
 	@GetMapping
 	public List<FilmShortDTO> getAll(@RequestParam(defaultValue = "short") String mode) {
@@ -99,6 +105,48 @@ public class FilmResource {
 	public void delete(@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id)
 			throws Exception {
 		srv.deleteById(id);
+	}
+	
+	record Search(
+			String title, 
+			Integer minlength, 
+			Integer maxlength, 
+			String rating,
+			String mode
+			) {}
+
+	@Operation(summary = "Consulta filtrada de peliculas")
+	@GetMapping("/filtro")
+	public List<?> search(@ParameterObject @Valid Search filter) throws BadRequestException {
+		if(filter.minlength != null && filter.maxlength != null && filter.minlength > filter.maxlength)
+				throw new BadRequestException("la duración máxima debe ser superior a la mínima");
+		Specification<Film> spec = null;
+		if(filter.title != null && !"".equals(filter.title)) {
+			Specification<Film> cond = (root, query, builder) -> builder.like(root.get("title"), "%" + filter.title.toUpperCase() + "%");
+			spec = spec == null ? cond : spec.and(cond);
+		}
+		if(filter.rating != null && !"".equals(filter.rating)) {
+			if(!List.of(Rating.VALUES).contains(filter.rating))
+				throw new BadRequestException("rating desconocido");
+			Specification<Film> cond = (root, query, builder) -> builder.equal(root.get("rating"), Rating.getEnum(filter.rating));
+			spec = spec == null ? cond : spec.and(cond);
+		}
+		if(filter.minlength != null) {
+			Specification<Film> cond = (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("length"), filter.minlength);
+			spec = spec == null ? cond : spec.and(cond);
+		}
+		if(filter.maxlength != null) {
+			Specification<Film> cond = (root, query, builder) -> builder.lessThanOrEqualTo(root.get("length"), filter.maxlength);
+			spec = spec == null ? cond : spec.and(cond);
+		}
+		if(spec == null)
+			throw new BadRequestException("Faltan los parametros de filtrado");
+		var query = srv.getAll(spec).stream();
+		if("short".equals(filter.mode))
+			return query.map(e -> FilmShortDTO.from(e)).toList();
+		else {
+			return query.map(e -> FilmDTO.from(e)).toList();
+		}
 	}
 
 }

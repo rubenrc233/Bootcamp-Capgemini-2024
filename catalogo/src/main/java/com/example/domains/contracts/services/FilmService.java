@@ -6,13 +6,13 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.example.domains.core.contracts.services.ProjectionDomainService;
+import com.example.domains.core.contracts.services.SpecificationDomainService;
 import com.example.domains.entities.Film;
 
 import lombok.NonNull;
 
-public interface FilmService extends ProjectionDomainService<Film, Integer>{
+public interface FilmService extends ProjectionDomainService<Film, Integer>, SpecificationDomainService<Film, Integer> {
 
 	List<Film> novedades(@NonNull Timestamp fecha);
-
 
 }
