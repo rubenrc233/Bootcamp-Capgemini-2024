@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ import com.example.exceptions.BadRequestException;
 import com.example.exceptions.NotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @RestController
@@ -47,19 +49,23 @@ public class FilmResource {
 
     @GetMapping(params = "page")
     @Operation(summary = "Obtener todas las películas en formato corto con paginación")
-    public Page<FilmShortDTO> getAll(Pageable pageable, @RequestParam(defaultValue = "short") String mode) {
+    public Page<FilmShortDTO> getAll(
+            @Parameter(description = "Configuración de paginación a aplicar en la consulta", example = "PageRequest.of(0, 10)") Pageable pageable,
+            @Parameter(description = "Modo de visualización, por defecto es 'short'", example = "short") @RequestParam(defaultValue = "short") String mode) {
         return srv.getByProjection(pageable, FilmShortDTO.class);
     }
 
     @GetMapping
     @Operation(summary = "Obtener todas las películas en formato corto")
-    public List<FilmShortDTO> getAll(@RequestParam(defaultValue = "short") String mode) {
+    public List<FilmShortDTO> getAll(
+            @Parameter(description = "Modo de visualización, por defecto es 'short'", example = "short") @RequestParam(defaultValue = "short") String mode) {
         return srv.getByProjection(FilmShortDTO.class);
     }
 
     @GetMapping(path = "/{id}")
     @Operation(summary = "Obtener una película por su ID")
-    public FilmDTO getOne(@PathVariable int id) throws Exception {
+    public FilmDTO getOne(
+            @Parameter(description = "ID de la película a buscar", example = "1") @PathVariable int id) throws Exception {
         Optional<Film> film = srv.getOne(id);
         if (film.isEmpty())
             throw new NotFoundException();
@@ -69,7 +75,8 @@ public class FilmResource {
     @GetMapping(path = "/{id}/reparto")
     @Transactional
     @Operation(summary = "Obtener el reparto de una película por su ID")
-    public List<ActorDTO> getFilms(@PathVariable int id) throws Exception {
+    public List<ActorDTO> getFilms(
+            @Parameter(description = "ID de la película", example = "1") @PathVariable int id) throws Exception {
         Optional<Film> rslt = srv.getOne(id);
         if (rslt.isEmpty())
             throw new NotFoundException();
@@ -79,18 +86,20 @@ public class FilmResource {
     @GetMapping(path = "/{id}/categorias")
     @Transactional
     @Operation(summary = "Obtener las categorías de una película por su ID")
-    public List<Category> getCategories(@PathVariable int id) throws Exception {
+    public List<Category> getCategories(
+            @Parameter(description = "ID de la película", example = "1") @PathVariable int id) throws Exception {
         Optional<Film> rslt = srv.getOne(id);
         if (rslt.isEmpty())
             throw new NotFoundException();
         return rslt.get().getCategories();
     }
 
-    @GetMapping(path = "/clasificaciones")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @Transactional
     @Operation(summary = "Crear una nueva película")
-    public ResponseEntity<Object> create(@RequestBody FilmDTO item) throws Exception {
+    public ResponseEntity<Object> create(
+            @Parameter(description = "Datos de la película a crear") @RequestBody FilmDTO item) throws Exception {
         Film newItem = srv.add(FilmDTO.from(item));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newItem.getFilmId())
                 .toUri();
@@ -100,7 +109,9 @@ public class FilmResource {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Actualizar una película por su ID")
-    public FilmDTO edit(@PathVariable int id, @Valid @RequestBody FilmDTO item) throws Exception {
+    public FilmDTO edit(
+            @Parameter(description = "ID de la película a actualizar", example = "1") @PathVariable int id,
+            @Parameter(description = "Datos de la película actualizados") @Valid @RequestBody FilmDTO item) throws Exception {
         if (item.getFilmId() != id)
             throw new BadRequestException("No coinciden los identificadores");
         return FilmDTO.from(srv.modify(FilmDTO.from(item)));
@@ -109,7 +120,8 @@ public class FilmResource {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @Operation(summary = "Eliminar una película por su ID")
-    public void delete(@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id)
+    public void delete(
+            @Parameter(description = "ID de la película a eliminar", example = "1") @PathVariable int id)
             throws Exception {
         srv.deleteById(id);
     }
@@ -124,7 +136,8 @@ public class FilmResource {
 
     @Operation(summary = "Consulta filtrada de películas")
     @GetMapping("/filtro")
-    public List<?> search(@ParameterObject @Valid Search filter) throws BadRequestException {
+    public List<?> search(
+            @ParameterObject @Valid Search filter) throws BadRequestException {
         if (filter.minlength != null && filter.maxlength != null && filter.minlength > filter.maxlength)
             throw new BadRequestException("la duración máxima debe ser superior a la mínima");
         Specification<Film> spec = null;
