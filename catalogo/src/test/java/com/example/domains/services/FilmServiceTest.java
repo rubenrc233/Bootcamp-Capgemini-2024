@@ -142,7 +142,7 @@ class FilmServiceTest {
             Film result = service.add(film);
             assertNotNull(result);
             assertEquals(film, result);
-            verify(dao, times(2)).save(film);
+            verify(dao, times(1)).save(film);
         }
 
         @Test
