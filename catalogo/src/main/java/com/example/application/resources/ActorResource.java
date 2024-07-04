@@ -32,85 +32,111 @@ import com.example.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @RestController
 @RequestMapping("/actores")
+@Schema(description = "Recurso que gestiona las operaciones relacionadas con los actores")
 public class ActorResource {
-	private ActorService srv;
+    private final ActorService srv;
 
-	public ActorResource(ActorService srv) {
-		this.srv = srv;
-	}
-	
-	@SuppressWarnings("rawtypes")
-	@GetMapping(path = "/v1")
-	public List getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
-		if("short".equals(modo))
-			return srv.getByProjection(ActorShort.class);
-		else
-			return srv.getAll();
-	}
-	
-	@GetMapping(path = "/v2")
-	public List<ActorDTO> getAllv2(@RequestParam(required = false) String sort) {
-		if (sort != null)
-			return (List<ActorDTO>) srv.getByProjection(Sort.by(sort), ActorDTO.class);
-		return srv.getByProjection(ActorDTO.class);
-	}
-	
-	@GetMapping(path = { "/v1", "/v2" }, params = "page")
-	public Page<ActorShort> getAll(@ParameterObject Pageable page) {
-		return srv.getByProjection(page, ActorShort.class);
-	}
-	
-	@GetMapping(path = { "/v1/{id}", "/v2/{id}" })
-	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
-		var item = srv.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		return ActorDTO.from(item.get());
-	}
-	
-	record Peli(int id, String titulo) {}
-	
-	@GetMapping(path = {"/v1/{id}/pelis","/v2/{id}/pelis"})
-	@Transactional
-	public List<Peli> getPelis(@PathVariable int id) throws NotFoundException {
-		var item = srv.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		return item.get().getFilmActors().stream()
-				.map(o -> new Peli(o.getFilm().getFilmId(), o.getFilm().getTitle()))
-				.toList();
-	}
-	
-	@DeleteMapping(path = "/v1/{id}/jubilacion")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void jubilar(@PathVariable int id) throws NotFoundException {
-		var item = srv.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		item.get().jubilate();
-	}
-	
-	@PostMapping(path = { "/v1", "/v2" })
-	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
-		var newItem = srv.add(ActorDTO.from(item));
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-			.buildAndExpand(newItem.getActorId()).toUri();
-		return ResponseEntity.created(location).build();
-	}
+    public ActorResource(ActorService srv) {
+        this.srv = srv;
+    }
 
-	@PutMapping(path = { "/v1/{id}", "/v2/{id}" })
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
-		if(id != item.getActorId())
-			throw new BadRequestException("No coinciden los identificadores");
-		srv.modify(ActorDTO.from(item));
-	}
+    @SuppressWarnings("rawtypes")
+    @GetMapping(path = "/v1")
+    @Operation(summary = "Obtener todos los actores")
+    public List getAll(
+            @Parameter(description = "Modo de visualización, puede ser 'largo' o 'short'", example = "largo") @RequestParam(required = false, defaultValue = "largo") String modo) {
+        if ("short".equals(modo))
+            return srv.getByProjection(ActorShort.class);
+        else
+            return srv.getAll();
+    }
 
-	@DeleteMapping(path = { "/v1/{id}", "/v2/{id}" })
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable int id) {
-		srv.deleteById(id);
-	}
+    @GetMapping(path = "/v2")
+    @Operation(summary = "Obtener todos los actores con ordenamiento")
+    public List<ActorDTO> getAllv2(
+            @Parameter(description = "Campo por el cual ordenar la lista", example = "nombre") @RequestParam(required = false) String sort) {
+        if (sort != null)
+            return (List<ActorDTO>) srv.getByProjection(Sort.by(sort), ActorDTO.class);
+        return srv.getByProjection(ActorDTO.class);
+    }
+
+    @GetMapping(path = { "/v1", "/v2" }, params = "page")
+    @Operation(summary = "Obtener todos los actores con paginación")
+    public Page<ActorShort> getAll(
+            @ParameterObject Pageable page) {
+        return srv.getByProjection(page, ActorShort.class);
+    }
+
+    @GetMapping(path = { "/v1/{id}", "/v2/{id}" })
+    @Operation(summary = "Obtener un actor por su ID")
+    public ActorDTO getOne(
+            @Parameter(description = "ID del actor a buscar", example = "1") @PathVariable int id) throws NotFoundException {
+        var item = srv.getOne(id);
+        if (item.isEmpty())
+            throw new NotFoundException();
+        return ActorDTO.from(item.get());
+    }
+
+    record Peli(
+            @Schema(description = "ID de la película") int id,
+            @Schema(description = "Título de la película") String titulo) {}
+
+    @GetMapping(path = { "/v1/{id}/pelis", "/v2/{id}/pelis" })
+    @Transactional
+    @Operation(summary = "Obtener películas de un actor por su ID")
+    public List<Peli> getPelis(
+            @Parameter(description = "ID del actor", example = "1") @PathVariable int id) throws NotFoundException {
+        var item = srv.getOne(id);
+        if (item.isEmpty())
+            throw new NotFoundException();
+        return item.get().getFilmActors().stream()
+                .map(o -> new Peli(o.getFilm().getFilmId(), o.getFilm().getTitle()))
+                .toList();
+    }
+
+    @DeleteMapping(path = "/v1/{id}/jubilacion")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @Operation(summary = "Jubilar a un actor por su ID")
+    public void jubilar(
+            @Parameter(description = "ID del actor", example = "1") @PathVariable int id) throws NotFoundException {
+        var item = srv.getOne(id);
+        if (item.isEmpty())
+            throw new NotFoundException();
+        item.get().jubilate();
+    }
+
+    @PostMapping(path = { "/v1", "/v2" })
+    @Operation(summary = "Crear un nuevo actor")
+    public ResponseEntity<Object> create(
+            @Parameter(description = "Datos del actor a crear") @Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+        var newItem = srv.add(ActorDTO.from(item));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newItem.getActorId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping(path = { "/v1/{id}", "/v2/{id}" })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Actualizar un actor por su ID")
+    public void update(
+            @Parameter(description = "ID del actor a actualizar", example = "1") @PathVariable int id,
+            @Parameter(description = "Datos del actor actualizados") @Valid @RequestBody ActorDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
+        if (id != item.getActorId())
+            throw new BadRequestException("No coinciden los identificadores");
+        srv.modify(ActorDTO.from(item));
+    }
+
+    @DeleteMapping(path = { "/v1/{id}", "/v2/{id}" })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Eliminar un actor por su ID")
+    public void delete(
+            @Parameter(description = "ID del actor a eliminar", example = "1") @PathVariable int id) {
+        srv.deleteById(id);
+    }
 }
