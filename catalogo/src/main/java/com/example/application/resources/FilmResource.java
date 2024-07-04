@@ -36,127 +36,133 @@ import com.example.exceptions.BadRequestException;
 import com.example.exceptions.NotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
-
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping(path = "/peliculas/v1")
+@Schema(description = "Recurso que gestiona las operaciones relacionadas con las películas")
 public class FilmResource {
-	@Autowired
-	private FilmService srv;
+    @Autowired
+    private FilmService srv;
 
-	@GetMapping(params = "page")
-	public Page<FilmShortDTO> getAll(Pageable pageable,@RequestParam(defaultValue = "short") String mode) {
-		return srv.getByProjection(pageable, FilmShortDTO.class);
-	}
-	
+    @GetMapping(params = "page")
+    @Operation(summary = "Obtener todas las películas en formato corto con paginación")
+    public Page<FilmShortDTO> getAll(Pageable pageable, @RequestParam(defaultValue = "short") String mode) {
+        return srv.getByProjection(pageable, FilmShortDTO.class);
+    }
 
-	@GetMapping
-	public List<FilmShortDTO> getAll(@RequestParam(defaultValue = "short") String mode) {
-		return srv.getByProjection(FilmShortDTO.class);
-	}
+    @GetMapping
+    @Operation(summary = "Obtener todas las películas en formato corto")
+    public List<FilmShortDTO> getAll(@RequestParam(defaultValue = "short") String mode) {
+        return srv.getByProjection(FilmShortDTO.class);
+    }
 
-	@GetMapping(path = "/{id}")
-	public FilmDTO getOne(@PathVariable int id)
-			throws Exception {
-		Optional<Film> film = srv.getOne(id);
-		if (film.isEmpty())
-			throw new NotFoundException();
-		return FilmDTO.from(film.get());
-	}
+    @GetMapping(path = "/{id}")
+    @Operation(summary = "Obtener una película por su ID")
+    public FilmDTO getOne(@PathVariable int id) throws Exception {
+        Optional<Film> film = srv.getOne(id);
+        if (film.isEmpty())
+            throw new NotFoundException();
+        return FilmDTO.from(film.get());
+    }
 
-	@GetMapping(path = "/{id}/reparto")
-	@Transactional
-	public List<ActorDTO> getFilms(@PathVariable int id)throws Exception {
-		Optional<Film> rslt = srv.getOne(id);
-		if (rslt.isEmpty())
-			throw new NotFoundException();
-		return rslt.get().getActors().stream().map(item -> ActorDTO.from(item)).toList();
-	}
+    @GetMapping(path = "/{id}/reparto")
+    @Transactional
+    @Operation(summary = "Obtener el reparto de una película por su ID")
+    public List<ActorDTO> getFilms(@PathVariable int id) throws Exception {
+        Optional<Film> rslt = srv.getOne(id);
+        if (rslt.isEmpty())
+            throw new NotFoundException();
+        return rslt.get().getActors().stream().map(item -> ActorDTO.from(item)).toList();
+    }
 
-	@GetMapping(path = "/{id}/categorias")
-	@Transactional
-	public List<Category> getCategories(@PathVariable int id) throws Exception {
-		Optional<Film> rslt = srv.getOne(id);
-		if (rslt.isEmpty())
-			throw new NotFoundException();
-		return rslt.get().getCategories();
-	}
+    @GetMapping(path = "/{id}/categorias")
+    @Transactional
+    @Operation(summary = "Obtener las categorías de una película por su ID")
+    public List<Category> getCategories(@PathVariable int id) throws Exception {
+        Optional<Film> rslt = srv.getOne(id);
+        if (rslt.isEmpty())
+            throw new NotFoundException();
+        return rslt.get().getCategories();
+    }
 
-	@GetMapping(path = "/clasificaciones")
-	@ResponseStatus(code = HttpStatus.CREATED)
-	@Transactional
-	public ResponseEntity<Object> create(@RequestBody FilmDTO item) throws Exception {
-		Film newItem = srv.add(FilmDTO.from(item));
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newItem.getFilmId())
-				.toUri();
-		return ResponseEntity.created(location).build();
-	}
+    @GetMapping(path = "/clasificaciones")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @Transactional
+    @Operation(summary = "Crear una nueva película")
+    public ResponseEntity<Object> create(@RequestBody FilmDTO item) throws Exception {
+        Film newItem = srv.add(FilmDTO.from(item));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newItem.getFilmId())
+                .toUri();
+        return ResponseEntity.created(location).build();
+    }
 
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Actualizar una película por su ID")
+    public FilmDTO edit(@PathVariable int id, @Valid @RequestBody FilmDTO item) throws Exception {
+        if (item.getFilmId() != id)
+            throw new BadRequestException("No coinciden los identificadores");
+        return FilmDTO.from(srv.modify(FilmDTO.from(item)));
+    }
 
-	@PutMapping(path = "/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public FilmDTO edit(@PathVariable int id,@Valid @RequestBody FilmDTO item) throws Exception {
-		if (item.getFilmId() != id)
-			throw new BadRequestException("No coinciden los identificadores");
-		return FilmDTO.from(srv.modify(FilmDTO.from(item)));
-	}
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    @Operation(summary = "Eliminar una película por su ID")
+    public void delete(@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id)
+            throws Exception {
+        srv.deleteById(id);
+    }
 
-	@DeleteMapping(path = "/{id}")
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void delete(@RequestParam(value = "Identificador de la pelicula", required = true) @PathVariable int id)
-			throws Exception {
-		srv.deleteById(id);
-	}
-	
-	record Search(
-			String title, 
-			Integer minlength, 
-			Integer maxlength, 
-			String rating,
-			String mode
-			) {}
+    record Search(
+            @Schema(description = "Título de la película") String title, 
+            @Schema(description = "Duración mínima de la película") Integer minlength, 
+            @Schema(description = "Duración máxima de la película") Integer maxlength, 
+            @Schema(description = "Clasificación de la película") String rating,
+            @Schema(description = "Modo de visualización") String mode
+    ) {}
 
-	@Operation(summary = "Consulta filtrada de peliculas")
-	@GetMapping("/filtro")
-	public List<?> search(@ParameterObject @Valid Search filter) throws BadRequestException {
-		if(filter.minlength != null && filter.maxlength != null && filter.minlength > filter.maxlength)
-				throw new BadRequestException("la duración máxima debe ser superior a la mínima");
-		Specification<Film> spec = null;
-		if(filter.title != null && !"".equals(filter.title)) {
-			Specification<Film> cond = (root, query, builder) -> builder.like(root.get("title"), "%" + filter.title.toUpperCase() + "%");
-			spec = spec == null ? cond : spec.and(cond);
-		}
-		if(filter.rating != null && !"".equals(filter.rating)) {
-			if(!List.of(Rating.VALUES).contains(filter.rating))
-				throw new BadRequestException("rating desconocido");
-			Specification<Film> cond = (root, query, builder) -> builder.equal(root.get("rating"), Rating.getEnum(filter.rating));
-			spec = spec == null ? cond : spec.and(cond);
-		}
-		if(filter.minlength != null) {
-			Specification<Film> cond = (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("length"), filter.minlength);
-			spec = spec == null ? cond : spec.and(cond);
-		}
-		if(filter.maxlength != null) {
-			Specification<Film> cond = (root, query, builder) -> builder.lessThanOrEqualTo(root.get("length"), filter.maxlength);
-			spec = spec == null ? cond : spec.and(cond);
-		}
-		if(spec == null)
-			throw new BadRequestException("Faltan los parametros de filtrado");
-		var query = srv.getAll(spec).stream();
-		if("short".equals(filter.mode))
-			return query.map(e -> FilmShortDTO.from(e)).toList();
-		else {
-			return query.map(e -> FilmDTO.from(e)).toList();
-		}
-	}
-	
-	@GetMapping(path = "/clasificaciones")
-	@Operation(summary = "Listado de las clasificaciones por edades")
-	public List<Map<String, String>> getClasificaciones() {
-		return List.of(Map.of("key", "G", "value", "Todos los públicos"),
-				Map.of("key", "PG", "value", "Guía paternal sugerida"),
-				Map.of("key", "PG-13", "value", "Guía paternal estricta"), Map.of("key", "R", "value", "Restringido"),
-				Map.of("key", "NC-17", "value", "Prohibido para audiencia de 17 años y menos"));
-	}
+    @Operation(summary = "Consulta filtrada de películas")
+    @GetMapping("/filtro")
+    public List<?> search(@ParameterObject @Valid Search filter) throws BadRequestException {
+        if (filter.minlength != null && filter.maxlength != null && filter.minlength > filter.maxlength)
+            throw new BadRequestException("la duración máxima debe ser superior a la mínima");
+        Specification<Film> spec = null;
+        if (filter.title != null && !"".equals(filter.title)) {
+            Specification<Film> cond = (root, query, builder) -> builder.like(root.get("title"), "%" + filter.title.toUpperCase() + "%");
+            spec = spec == null ? cond : spec.and(cond);
+        }
+        if (filter.rating != null && !"".equals(filter.rating)) {
+            if (!List.of(Rating.VALUES).contains(filter.rating))
+                throw new BadRequestException("rating desconocido");
+            Specification<Film> cond = (root, query, builder) -> builder.equal(root.get("rating"), Rating.getEnum(filter.rating));
+            spec = spec == null ? cond : spec.and(cond);
+        }
+        if (filter.minlength != null) {
+            Specification<Film> cond = (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("length"), filter.minlength);
+            spec = spec == null ? cond : spec.and(cond);
+        }
+        if (filter.maxlength != null) {
+            Specification<Film> cond = (root, query, builder) -> builder.lessThanOrEqualTo(root.get("length"), filter.maxlength);
+            spec = spec == null ? cond : spec.and(cond);
+        }
+        if (spec == null)
+            throw new BadRequestException("Faltan los parametros de filtrado");
+        var query = srv.getAll(spec).stream();
+        if ("short".equals(filter.mode))
+            return query.map(e -> FilmShortDTO.from(e)).toList();
+        else {
+            return query.map(e -> FilmDTO.from(e)).toList();
+        }
+    }
 
+    @GetMapping(path = "/clasificaciones")
+    @Operation(summary = "Listado de las clasificaciones por edades")
+    public List<Map<String, String>> getClasificaciones() {
+        return List.of(Map.of("key", "G", "value", "Todos los públicos"),
+                Map.of("key", "PG", "value", "Guía paternal sugerida"),
+                Map.of("key", "PG-13", "value", "Guía paternal estricta"), Map.of("key", "R", "value", "Restringido"),
+                Map.of("key", "NC-17", "value", "Prohibido para audiencia de 17 años y menos"));
+    }
 }
