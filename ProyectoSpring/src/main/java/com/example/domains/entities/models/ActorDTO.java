@@ -12,15 +12,11 @@ import lombok.Data;
 
 @Data @AllArgsConstructor
 public class ActorDTO implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	@JsonProperty("id")
 	private int actorId;
 	@JsonProperty("nombre")
 	@NotBlank
-	@Size(max = 45, min = 2)
+	@Size(max = 45)
 	private String firstName;
 	@JsonProperty("apellidos")
 	private String lastName;

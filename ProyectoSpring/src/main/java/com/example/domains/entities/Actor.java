@@ -143,4 +143,9 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 		
 	}
 
+	public void jubilate() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
