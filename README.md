@@ -84,6 +84,20 @@ A project for managing contacts. This project includes examples of creating, upd
 - **Purpose:** Learn and implement microservices for product catalog management.
 - **Documentation:** [Spring Cloud](https://spring.io/projects/spring-cloud)
 
+### 13. curso
+An Angular project for course management. This project includes examples of creating, updating, and managing different actions using Angular framework
+
+- **Technologies Used:** Angular
+- **Purpose:** Learn and implement Angular features
+- **Documentation:** [Angular](https://angular.io/)
+
+### 14. node
+A Node.js project for backend services. This project includes examples of creating and managing backend services using Node.js (based on package.json management).
+
+- **Technologies Used:** Node.js, Express
+- **Purpose:** Learn and implement backend services with Node.js.
+- **Documentation:** [Node.js](https://nodejs.org/)
+
 ## Getting Started
 
 To get started with any of the projects:
