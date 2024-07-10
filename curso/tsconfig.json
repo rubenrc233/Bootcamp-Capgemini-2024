@@ -27,7 +27,8 @@
     "paths": {
       "@my/core":["src/lib/my-core/index.ts"],
       "@main/notification":["src/app/main/index.ts"],
-      "@demos":["src/app/demos/index.ts"]
+      "@demos":["src/app/demos/index.ts"],
+      "@commonServices":["src/app/common-services/index.ts"]
     }
   },
   "angularCompilerOptions": {
