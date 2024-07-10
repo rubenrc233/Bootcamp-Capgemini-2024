@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SecurityModule } from './security';
-import{MyCoreModule} from '@my/core'
+import{LoggerService, MyCoreModule} from '@my/core'
 
 @Component({
   selector: 'app-root',
@@ -12,4 +12,10 @@ import{MyCoreModule} from '@my/core'
 })
 export class AppComponent {
   title = 'curso';
+  constructor(log:LoggerService){
+    log.error("es un error");
+    log.warning("es in warning");
+    log.info("es un info");
+    log.log("es un log")
+  }
 }
