@@ -1,3 +1,4 @@
+<h1>Hi {{Name | elipsis:10 | uppercase}}</h1>
 <p>
     <input type="text" [(ngModel)]="Name">
     <input type ="button" value="hi" (click)="hi()">
@@ -30,7 +31,7 @@ vm.NotificationType.log)" >
 <p>
     <select [(ngModel)] = "provinceId">
         <option value = ""> -- Select option --</option>
-        <option *ngFor="let p of list" [value]="p.id">{{p.name}}</option>
+        <option *ngFor="let p of list" [value]="p.id">{{p.name | capitalize}}</option>
     </select>
     Select: {{provinceId}}
     <input type="text" value="Tabarnia" #txtProvince>
