@@ -1,4 +1,9 @@
 <p>
+    <input type="text" [(ngModel)]="Name">
+    <input type ="button" value="hi" (click)="hi()">
+    <input type ="button" value="bye" (click)="bye()">
+    <input type ="button" value="say" (click)="say('Something')">
+    <input type ="button" value="switch" (click)="switch()">
 <input type="button" value="Error" (click)="vm.add('Esto es una notificación de error')" >
 <input type="button" value="Warn" (click)="vm.add('Esta notificación es un aviso',
 vm.NotificationType.warn)" >
@@ -6,4 +11,28 @@ vm.NotificationType.warn)" >
 vm.NotificationType.info)" >
 <input type="button" value="Log" (click)="vm.add('Para trazar con notificaciones',
 vm.NotificationType.log)" >
+</p>
+<p [textContent]="result">Label</p>
+<p [innerHTML]="result">With HTML</p>
+<p>{{date}}</p>
+<p [hidden]="!visible">Now u can see me </p>
+<p *ngIf="visible">Now i exist</p>
+<p [ngClass]="aesthetic">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus praesentium placeat eum maiores fugit voluptate, porro, eligendi repudiandae aliquam debitis corrupti libero at pariatur, maxime magni molestiae. Nam, quidem voluptatum.</p>
+<p>
+    Calculate 2+2 = {{2+2}} = {{calculate(2,2)}}
+</p>
+<ul>
+    <li *ngFor="let item of list; let index=index; let fondo=odd;"[style.background-color]="fondo ? 'LightBlue' : 'Lavender'">
+        {{item.name}}({{item.id}}) [Element {{index +1}} from {{list.length}}]
+    </li>  
+</ul>
+
+<p>
+    <select [(ngModel)] = "provinceId">
+        <option value = ""> -- Select option --</option>
+        <option *ngFor="let p of list" [value]="p.id">{{p.name}}</option>
+    </select>
+    Select: {{provinceId}}
+    <input type="text" value="Tabarnia" #txtProvince>
+    <input type="button" value= "add" (click)="add(txtProvince.value)">
 </p>
