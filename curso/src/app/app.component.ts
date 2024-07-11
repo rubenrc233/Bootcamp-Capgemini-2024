@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SecurityModule } from './security';
-import{LoggerService, MyCoreModule} from '@my/core'
+import{MyCoreModule} from '@my/core'
 import { NotificationModalComponent } from '@main/notification';
 import { DemosComponent } from '@demos';
 
@@ -14,10 +14,4 @@ import { DemosComponent } from '@demos';
 })
 export class AppComponent {
   title = 'curso';
-  constructor(log:LoggerService){
-    log.error("es un error");
-    log.warning("es in warning");
-    log.info("es un info");
-    log.log("es un log")
-  }
 }
