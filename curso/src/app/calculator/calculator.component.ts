@@ -14,10 +14,14 @@ export class CalculatorComponent {
   firstOperand: number | null = null;
   operator: string | null = null;
   waitForSecondNumber = false;
-  maxDigits = 21;
+  maxDigits = 32;
+  isError = false;
 
   public getNumber(v: string) {
-    if (this.waitForSecondNumber) {
+    if (this.isError) {
+      this.currentNumber = v;
+      this.isError = false;
+    } else if (this.waitForSecondNumber) {
       this.currentNumber = v;
       this.waitForSecondNumber = false;
     } else {
@@ -45,9 +49,12 @@ export class CalculatorComponent {
         return (this.firstOperand || 0) * secondOp;
       case '/':
         if (secondOp === 0) {
-          return 'Cant divide by 0';
+          this.isError = true;
+          return 'No se puede dividir por 0';
         }
         return (this.firstOperand || 0) / secondOp;
+      case '%':
+        return (this.firstOperand || 0) % secondOp;
       case '=':
         return secondOp;
       default:
@@ -77,6 +84,11 @@ export class CalculatorComponent {
     this.firstOperand = null;
     this.operator = null;
     this.waitForSecondNumber = false;
+    this.isError = false;
+  }
+
+  public clearEntry() {
+    this.currentNumber = '0';
   }
 
   public getFontSize(): string {

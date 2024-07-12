@@ -1,5 +1,5 @@
 .calculator {
-  width: 300px;
+  width: 450px;
   margin: 50px auto;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -47,6 +47,11 @@ button {
 button:active {
   background-color: #bdc3c7;
   transform: scale(0.95);
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
 }
 
 button.equals {
