@@ -36,4 +36,6 @@ vm.NotificationType.log)" >
     Select: {{provinceId}}
     <input type="text" value="Tabarnia" #txtProvince>
     <input type="button" value= "add" (click)="add(txtProvince.value)">
+    <my-sizer [(size)]="fontSize">{{list | json}}</my-sizer>
+    <app-grafico-svg></app-grafico-svg>
 </p>
