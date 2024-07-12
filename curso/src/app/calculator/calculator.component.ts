@@ -39,20 +39,24 @@ export class CalculatorComponent {
     }
   }
 
+  private roundToFiveDecimals(value: number): number {
+    return Math.round(value * 100000) / 100000;
+  }
+
   private doCalculation(op: string, secondOp: number): number | string {
     switch (op) {
       case '+':
-        return (this.firstOperand || 0) + secondOp;
+        return this.roundToFiveDecimals((this.firstOperand || 0) + secondOp);
       case '-':
-        return (this.firstOperand || 0) - secondOp;
+        return this.roundToFiveDecimals((this.firstOperand || 0) - secondOp);
       case '*':
-        return (this.firstOperand || 0) * secondOp;
+        return this.roundToFiveDecimals((this.firstOperand || 0) * secondOp);
       case '/':
         if (secondOp === 0) {
           this.isError = true;
           return 'No se puede dividir por 0';
         }
-        return (this.firstOperand || 0) / secondOp;
+        return this.roundToFiveDecimals((this.firstOperand || 0) / secondOp);
       case '%':
         return (this.firstOperand || 0) % secondOp;
       case '=':

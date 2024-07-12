@@ -1,5 +1,5 @@
 .calculator {
-  width: 450px;
+  width: 445px;
   margin: 50px auto;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -26,12 +26,25 @@
 }
 
 .calculator-keys {
+  display: flex;
+  flex-direction: column;
+}
+
+.operations {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 60px);
-  gap: 10px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 2px;
+  padding: 8px;
+  background-color: #34495e;
+}
+
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
   padding: 20px;
   background-color: #ecf0f1;
+  width: 100%;
 }
 
 button {
@@ -57,45 +70,19 @@ button:disabled {
 button.equals {
   background-color: #e74c3c;
   color: white;
-  grid-row: span 2;
 }
 
 button.zero {
   grid-column: span 2;
 }
 
-button:nth-child(1) {
+.operations button {
+  font-size: 1.9em;
+  width: 55px;
   background-color: #3498db;
   color: white;
 }
 
-button:nth-child(1):active {
-  background-color: #2980b9;
-}
-
-button:nth-child(2) {
-  background-color: #3498db;
-  color: white;
-}
-
-button:nth-child(2):active {
-  background-color: #2980b9;
-}
-
-button:nth-child(3) {
-  background-color: #3498db;
-  color: white;
-}
-
-button:nth-child(3):active {
-  background-color: #2980b9;
-}
-
-button:nth-child(4) {
-  background-color: #3498db;
-  color: white;
-}
-
-button:nth-child(4):active {
+.operations button:active {
   background-color: #2980b9;
 }
