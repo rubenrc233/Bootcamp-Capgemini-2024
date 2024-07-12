@@ -1,0 +1,22 @@
+<div class="calculator">
+  <div class="calculator-display">{{ currentNumber }}</div>
+  <div class="calculator-keys">
+    <button (click)="getOperation('+')">+</button>
+    <button (click)="getOperation('-')">-</button>
+    <button (click)="getOperation('*')">*</button>
+    <button (click)="getOperation('/')">/</button>
+    <button (click)="getNumber('7')">7</button>
+    <button (click)="getNumber('8')">8</button>
+    <button (click)="getNumber('9')">9</button>
+    <button (click)="getOperation('=')" class="equals">=</button>
+    <button (click)="getNumber('4')">4</button>
+    <button (click)="getNumber('5')">5</button>
+    <button (click)="getNumber('6')">6</button>
+    <button (click)="getNumber('1')">1</button>
+    <button (click)="getNumber('2')">2</button>
+    <button (click)="getNumber('3')">3</button>
+    <button (click)="getNumber('0')" class="zero">0</button>
+    <button (click)="getDecimal()">.</button>
+    <button (click)="clear()">AC</button>
+  </div>
+</div>
