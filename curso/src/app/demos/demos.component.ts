@@ -34,7 +34,7 @@ export class DemosComponent implements OnInit,OnDestroy{
     this.provinceId = id
   }
   private suscriptor: Unsubscribable | undefined;
-  constructor(public vm: NotificationService) { }
+  constructor(public vm: NotificationService,) { }
   public get Name():string {return this.name}
   public set Name(value:string){this.name = value}
 

@@ -1,31 +1,37 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.css']
 })
 export class CalculatorComponent {
-  currentNumber: string = '0';
+  currentNumber = '0';
   firstOperand: number | null = null;
   operator: string | null = null;
-  waitForSecondNumber: boolean = false;
+  waitForSecondNumber = false;
+  maxDigits = 21;
 
   public getNumber(v: string) {
     if (this.waitForSecondNumber) {
       this.currentNumber = v;
       this.waitForSecondNumber = false;
     } else {
-      this.currentNumber === '0' ? this.currentNumber = v : this.currentNumber += v;
+      if (this.currentNumber.length < this.maxDigits) {
+        this.currentNumber === '0' ? this.currentNumber = v : this.currentNumber += v;
+      }
     }
   }
 
   getDecimal() {
     if (!this.currentNumber.includes('.')) {
-      this.currentNumber += '.';
+      if (this.currentNumber.length < this.maxDigits) {
+        this.currentNumber += '.';
+      }
     }
   }
 
@@ -51,7 +57,7 @@ export class CalculatorComponent {
       this.firstOperand = Number(this.currentNumber);
     } else if (this.operator) {
       const result = this.doCalculation(this.operator, Number(this.currentNumber));
-      this.currentNumber = String(result);
+      this.currentNumber = this.formatNumber(String(result));
       this.firstOperand = result;
     }
 
@@ -64,5 +70,24 @@ export class CalculatorComponent {
     this.firstOperand = null;
     this.operator = null;
     this.waitForSecondNumber = false;
+  }
+
+  public getFontSize(): string {
+    const length = this.currentNumber.length;
+    if (length > 10) {
+      return '1.5em';
+    } else if (length > 7) {
+      return '2em';
+    } else {
+      return '2.5em';
+    }
+  }
+
+  private formatNumber(num: string): string {
+    if (num.length > this.maxDigits) {
+      const formattedNumber = Number(num).toExponential(this.maxDigits - 5);
+      return formattedNumber;
+    }
+    return num;
   }
 }

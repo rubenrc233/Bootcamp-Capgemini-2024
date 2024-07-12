@@ -1,5 +1,5 @@
 <div class="calculator">
-  <div class="calculator-display">{{ currentNumber }}</div>
+  <div class="calculator-display" [ngStyle]="{'font-size': getFontSize()}">{{ currentNumber }}</div>
   <div class="calculator-keys">
     <button (click)="getOperation('+')">+</button>
     <button (click)="getOperation('-')">-</button>
