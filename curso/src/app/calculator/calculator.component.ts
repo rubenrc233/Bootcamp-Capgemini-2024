@@ -35,7 +35,7 @@ export class CalculatorComponent {
     }
   }
 
-  private doCalculation(op: string, secondOp: number): number {
+  private doCalculation(op: string, secondOp: number): number | string {
     switch (op) {
       case '+':
         return (this.firstOperand || 0) + secondOp;
@@ -44,6 +44,9 @@ export class CalculatorComponent {
       case '*':
         return (this.firstOperand || 0) * secondOp;
       case '/':
+        if (secondOp === 0) {
+          return 'Cant divide by 0';
+        }
         return (this.firstOperand || 0) / secondOp;
       case '=':
         return secondOp;
@@ -57,8 +60,12 @@ export class CalculatorComponent {
       this.firstOperand = Number(this.currentNumber);
     } else if (this.operator) {
       const result = this.doCalculation(this.operator, Number(this.currentNumber));
-      this.currentNumber = this.formatNumber(String(result));
-      this.firstOperand = result;
+      if (typeof result === 'string') {
+        this.currentNumber = result;
+      } else {
+        this.currentNumber = this.formatNumber(String(result));
+        this.firstOperand = result;
+      }
     }
 
     this.operator = op;
