@@ -1,4 +1,4 @@
-<h1>Contacto</h1>
+<h1>Contact</h1>
 @if(VM.Elemento) {
 <form #miForm="ngForm" class="row gy-2 gx-2 align-items-start">
   @if (VM.Modo==='add') {
@@ -15,14 +15,14 @@
       min="0"
       placeholder=" "
     />
-    <label for="id">Código:</label>
+    <label for="id">Code:</label>
     <output class="invalid-feedback" [hidden]="id.valid">{{
       id.errors | errormsg
     }}</output>
   </div>
   } @else {
   <div class="col-md-2">
-    <label class="form-label-sm" for="id">Código:</label>
+    <label class="form-label-sm" for="id">Code:</label>
     <output class="d-block" [textContent]="VM.Elemento.id"></output>
   </div>
   }
@@ -44,7 +44,7 @@
       <option>Excmo.</option>
       <option>Excma.</option>
     </select>
-    <label for="tratamiento">Tratamiento:</label>
+    <label for="tratamiento">Treatment:</label>
   </div>
   <div class="form-floating col-md-4">
     <input
@@ -60,7 +60,7 @@
       maxlength="50"
       placeholder=" "
     />
-    <label for="nombre">Nombre:</label>
+    <label for="nombre">Name:</label>
     <output class="invalid-feedback" [hidden]="nombre.valid">{{
       nombre.errors | errormsg
     }}</output>
@@ -78,7 +78,7 @@
       maxlength="50"
       placeholder=" "
     />
-    <label for="apellidos">Apellidos:</label>
+    <label for="apellidos">Surnames:</label>
     <output class="invalid-feedback" [hidden]="apellidos.valid">{{
       apellidos.errors | errormsg
     }}</output>
@@ -96,7 +96,7 @@
       placeholder="
 "
     />
-    <label class="form-label" for="telefono">Teléfono:</label>
+    <label class="form-label" for="telefono">Phone number:</label>
     <output class="invalid-feedback" [hidden]="telefono.valid">{{
       telefono.errors
         | errormsg
@@ -117,7 +117,7 @@ ser: 555 999 999"
       maxlength="100"
       placeholder=" "
     />
-    <label class="form-label" for="email">Correo:</label>
+    <label class="form-label" for="email">Email:</label>
     <output class="invalid-feedback" [hidden]="email.valid">{{
       email.errors | errormsg
     }}</output>
@@ -133,13 +133,13 @@ ser: 555 999 999"
       #nacimiento="ngModel"
       placeholder=" "
     />
-    <label class="form-label" for="nacimiento">F. Nacimiento:</label>
+    <label class="form-label" for="nacimiento">Born d.:</label>
     <output class="invalid-feedback" [hidden]="nacimiento.valid">{{
       nacimiento.errors | errormsg
     }}</output>
   </div>
   <div class="col-md-4 col-lg-2">
-    <div class="col-form-label-sm d-inline d-lg-block">Sexo:</div>
+    <div class="col-form-label-sm d-inline d-lg-block">Sex:</div>
     <div class="ms-2 d-inline">
       <div class="form-check form-check-inline">
         <input
@@ -150,7 +150,7 @@ ser: 555 999 999"
           value="H"
           [(ngModel)]="VM.Elemento.sexo"
         />
-        <label class="form-check-label" for="sexo1">Hombre</label>
+        <label class="form-check-label" for="sexo1">Man</label>
       </div>
       <div class="form-check form-check-inline">
         <input
@@ -161,12 +161,12 @@ ser: 555 999 999"
           value="M"
           [(ngModel)]="VM.Elemento.sexo"
         />
-        <label class="form-check-label" for="sexo2">Mujer</label>
+        <label class="form-check-label" for="sexo2">Female</label>
       </div>
     </div>
   </div>
   <div class="col-md-4 col-lg-2">
-    <div class="col-form-label-sm d-inline d-lg-block">Situación:</div>
+    <div class="col-form-label-sm d-inline d-lg-block">Situation:</div>
     <div class="ms-2 form-check form-check-inline form-switch">
       <input
         class="form-check-input"
@@ -176,7 +176,7 @@ ser: 555 999 999"
         [(ngModel)]="VM.Elemento.conflictivo"
         #conflictivo="ngModel"
       />
-      <label class="form-check-label" for="conflictivo">Conflictivo</label>
+      <label class="form-check-label" for="conflictivo">Violent</label>
     </div>
   </div>
   <div class="form-floating col-md-12">
@@ -200,14 +200,14 @@ ser: 555 999 999"
     <input
       type="button"
       class="btn btn-success"
-      value="Enviar"
+      value="Send"
       (click)="VM.send()"
       [disabled]="miForm.invalid"
     />
     <input
       type="button"
       class="btn btn-info"
-      value="Volver"
+      value="Return"
       (click)="VM.cancel()"
     />
   </div>

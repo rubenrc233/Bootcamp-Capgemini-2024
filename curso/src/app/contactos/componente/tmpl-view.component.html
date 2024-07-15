@@ -1,4 +1,4 @@
-<h1>Contacto</h1>
+<h1>Contact</h1>
 @if(VM.Elemento) {
 <div class="row">
 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -11,7 +11,7 @@ alt="Foto de {{VM.Elemento.nombre}} {{VM.Elemento.apellidos}}" class="rounded" /
 <div class="col-sm-6 col-md-8">
 <h4>{{VM.Elemento.tratamiento}} {{VM.Elemento.nombre}} {{VM.Elemento.apellidos}}</h4>
 <p [hidden]="!VM.Elemento.conflictivo"><small class="text-danger">
-<i class="fas fa-skull-crossbones mr-2"></i>Persona conflictiva</small></p>
+<i class="fas fa-skull-crossbones mr-2"></i>Violent</small></p>
 <p>
 <i class="fas fa-phone-alt mr-2"></i>{{VM.Elemento.telefono}}
 <br />
@@ -33,7 +33,7 @@ Social</button>
 <li class="divider"></li>
 <li><a href="#">Github</a></li>
 </ul>
-<input class="btn btn-secondary" type="button" value="Volver" (click)="VM.cancel()">
+<input class="btn btn-secondary" type="button" value="Return" (click)="VM.cancel()">
 </div>
 </div>
 </div>

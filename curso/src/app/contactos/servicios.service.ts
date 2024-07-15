@@ -73,7 +73,7 @@ export class ContactosViewModelService {
     });
   }
   public delete(key: any): void {
-    if (!window.confirm('¿Seguro?')) {
+    if (!window.confirm('Sure?')) {
       return;
     }
     this.dao.remove(key).subscribe({
@@ -118,7 +118,7 @@ export class ContactosViewModelService {
         break;
       default:
         msg = `ERROR ${err.status}: ${err.error?.['title'] ?? err.statusText}.${
-          err.error?.['detail'] ? ` Detalles: ${err.error['detail']}` : ''
+          err.error?.['detail'] ? ` Details: ${err.error['detail']}` : ''
         }`;
         break;
     }
