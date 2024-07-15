@@ -16,10 +16,13 @@
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               @for (item of menu; track item) {
                 <li class="nav-item">
-                  <button class="btn btn-link nav-link" data-bs-dismiss="offcanvas" [class.active]="item.component === current" type="button"
+                  <button class="btn btn-link nav-link" [routerLink]="['/']" data-bs-dismiss="offcanvas" [class.active]="item.component === current" type="button"
                     (click)="select($index)"><i class="{{item.icon}}"></i> {{item.text}}</button>
                 </li>
               }
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/contactos']" (click)= "setContacts()" routerLinkActive="active">contactos</a>
+                </li>
             </ul>
             <!-- <app-login /> -->
           </div>
