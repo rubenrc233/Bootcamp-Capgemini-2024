@@ -1,6 +1,6 @@
 <header>
     @for (item of menu; track item) {
-        <button type="button" (click)="select($index)">{{item.text}}</button>
+        <button type="button" class= item.icon (click)="select($index)"><i class= {{item.icon}} ></i> {{item.text}}</button>
     }
 </header>
 <app-notification></app-notification>
