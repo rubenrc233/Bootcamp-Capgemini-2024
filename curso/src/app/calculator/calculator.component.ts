@@ -17,7 +17,7 @@ export class CalculatorComponent {
   maxDigits = 32;
   isError = false;
 
-  public getNumber(v: string) {
+  public setNumber(v: string) {
     if (this.isError) {
       this.currentNumber = v;
       this.isError = false;
@@ -31,7 +31,7 @@ export class CalculatorComponent {
     }
   }
 
-  getDecimal() {
+  setDecimal() {
     if (!this.currentNumber.includes('.')) {
       if (this.currentNumber.length < this.maxDigits) {
         this.currentNumber += '.';
@@ -66,7 +66,7 @@ export class CalculatorComponent {
     }
   }
 
-  public getOperation(op: string) {
+  public setOperation(op: string) {
     if (this.firstOperand === null) {
       this.firstOperand = Number(this.currentNumber);
     } else if (this.operator) {

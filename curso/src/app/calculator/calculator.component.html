@@ -4,25 +4,25 @@
     <div class="operations">
       <button (click)="clear()">C</button>
       <button (click)="clearEntry()">CE</button>
-      <button (click)="getOperation('%')" [disabled]="isError">%</button>
-      <button (click)="getOperation('+')" [disabled]="isError">+</button>
-      <button (click)="getOperation('-')" [disabled]="isError">-</button>
-      <button (click)="getOperation('*')" [disabled]="isError">*</button>
-      <button (click)="getOperation('/')" [disabled]="isError">/</button>
+      <button (click)="setOperation('%')" [disabled]="isError">%</button>
+      <button (click)="setOperation('+')" [disabled]="isError">+</button>
+      <button (click)="setOperation('-')" [disabled]="isError">-</button>
+      <button (click)="setOperation('*')" [disabled]="isError">*</button>
+      <button (click)="setOperation('/')" [disabled]="isError">/</button>
     </div>
     <div class="numbers">
-      <button (click)="getNumber('7')">7</button>
-      <button (click)="getNumber('8')">8</button>
-      <button (click)="getNumber('9')">9</button>
-      <button (click)="getNumber('4')">4</button>
-      <button (click)="getNumber('5')">5</button>
-      <button (click)="getNumber('6')">6</button>
-      <button (click)="getNumber('1')">1</button>
-      <button (click)="getNumber('2')">2</button>
-      <button (click)="getNumber('3')">3</button>
-      <button (click)="getNumber('0')" class="zero">0</button>
-      <button (click)="getDecimal()">.</button>
-      <button (click)="getOperation('=')" class="equals" [disabled]="isError">=</button>
+      <button (click)="setNumber('7')">7</button>
+      <button (click)="setNumber('8')">8</button>
+      <button (click)="setNumber('9')">9</button>
+      <button (click)="setNumber('4')">4</button>
+      <button (click)="setNumber('5')">5</button>
+      <button (click)="setNumber('6')">6</button>
+      <button (click)="setNumber('1')">1</button>
+      <button (click)="setNumber('2')">2</button>
+      <button (click)="setNumber('3')">3</button>
+      <button (click)="setNumber('0')" class="zero">0</button>
+      <button (click)="setDecimal()">.</button>
+      <button (click)="setOperation('=')" class="equals" [disabled]="isError">=</button>
     </div>
   </div>
 </div>
