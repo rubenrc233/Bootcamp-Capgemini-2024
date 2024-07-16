@@ -1,0 +1,15 @@
+<!-- generic-table.component.html -->
+<div class="generic-table-container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let header of headers">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data">
+        <td *ngFor="let key of headers">{{ row[key] }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

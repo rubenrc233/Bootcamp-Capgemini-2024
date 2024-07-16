@@ -20,7 +20,8 @@ export class ActorViewModelService {
     protected out: LoggerService,
     protected dao: ActorsDAOService,
     protected router: Router
-  ) {}
+  ) {
+  }
 
   public get Modo(): ModoCRUD {
     return this.modo;

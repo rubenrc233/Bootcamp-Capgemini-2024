@@ -10,6 +10,8 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { ErrorMessagePipe } from '../../../../pipes/cadenas.pipe';
+import { GenericTableComponent } from '../../../main/services/BaseEntity.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-actor',
@@ -36,9 +38,11 @@ export class ActorsComponent implements OnInit, OnDestroy {
   templateUrl: '../templates/list/template-actor-list.component.html',
   styleUrls: ['../templates/list/template-actor-list.component.css'],
   standalone: true,
-  imports: [RouterLink, NgFor],
+  imports: [CommonModule,RouterLink, NgFor,GenericTableComponent],
 })
 export class ActorsListComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+  public headers: string[] = ['actorId', 'firstName', 'lastName', 'lastUpdate'];
   constructor(protected vm: ActorViewModelService) {}
   public get VM(): ActorViewModelService {
     return this.vm;
