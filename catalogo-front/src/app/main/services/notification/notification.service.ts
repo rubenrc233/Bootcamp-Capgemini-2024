@@ -5,6 +5,7 @@ import { LoggerService } from '../logger/logger.service';
 export enum NotificationType { error = 'error', warn = 'warn', info = 'info', log= 'log' }
 
 export class Notification {
+  
   constructor(private id: number, private message: string,
   private type: NotificationType) {}
   public get Id() { return this.id; }

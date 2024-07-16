@@ -1,0 +1,60 @@
+<h1>Add new actor</h1>
+@if(VM.Actor) {
+<form #miForm="ngForm" class="row gy-2 gx-2 align-items-start">
+  <div class="form-floating col-md-4">
+    <input
+      class="form-control"
+      [class.is-invalid]="firstName.invalid && miForm.dirty"
+      type="text"
+      name="firstName"
+      id="firstName"
+      [(ngModel)]="VM.Actor.firstName"
+      #firstName="ngModel"
+      required
+      minlength="2"
+      maxlength="50"
+      placeholder=" "
+    />
+    <label for="firstName">Name:</label>
+    <output class="invalid-feedback" [hidden]="firstName.valid">{{
+      firstName.errors | errormsg
+    }}</output>
+  </div>
+  <div class="form-floating col-md-4">
+    <input
+      class="form-control"
+      [class.is-invalid]="lastName.invalid && miForm.dirty"
+      type="text"
+      name="lastName"
+      id="lastName"
+      [(ngModel)]="VM.Actor.lastName"
+      #lastName="ngModel"
+      required
+      minlength="2"
+      maxlength="50"
+      placeholder=" "
+    />
+    <label for="lastName">Surnames:</label>
+    <output class="invalid-feedback" [hidden]="lastName.valid">{{
+      lastName.errors | errormsg
+    }}</output>
+  </div>
+  <div class="mt-2">
+    <input
+      type="button"
+      class="btn btn-success"
+      value="Send"
+      (click)="VM.send()"
+      [disabled]="miForm.invalid"
+    />
+    <input
+      type="button"
+      class="btn btn-info"
+      value="Return"
+      (click)="VM.cancel()"
+    />
+  </div>
+</form>
+} @else {
+<h2>No data</h2>
+}

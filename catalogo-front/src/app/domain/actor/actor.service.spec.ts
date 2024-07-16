@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { ActorViewModelService } from './actor.service';
 
-import { ActorService } from './actor.service';
 
 describe('ActorService', () => {
-  let service: ActorService;
+  let service: ActorViewModelService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ActorService);
+    service = TestBed.inject(ActorViewModelService);
   });
 
   it('should be created', () => {

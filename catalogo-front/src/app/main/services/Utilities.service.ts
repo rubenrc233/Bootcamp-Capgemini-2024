@@ -1,10 +1,12 @@
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpContextToken, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { NotificationService } from "./notification";
 
-export abstract class UtilitiesService{
+export type ModoCRUD = 'v1' | 'add' | 'edit' | 'view' | 'delete';
+export const AUTH_REQUIRED = new HttpContextToken<boolean>(() => false);
 
-handleError(notify: NotificationService,router: Router,err: HttpErrorResponse) {
+export abstract class UtilitiesService{
+  static handleError(notify: NotificationService,router: Router,err: HttpErrorResponse) {
     let msg = '';
     switch (err.status) {
       case 0:

@@ -1,6 +1,6 @@
 import { I18nSelectPipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { NotificationService } from 'src/app/common-services';
+import { NotificationService } from '../services/notification';
 
 @Component({
   selector: 'app-notification',

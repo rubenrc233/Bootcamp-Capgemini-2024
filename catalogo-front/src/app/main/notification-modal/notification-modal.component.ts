@@ -1,6 +1,6 @@
 import { NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { Component } from '@angular/core';
-import { NotificationService } from '@commonServices';
+import { NotificationService } from '../services/notification';
 
 @Component({
   selector: 'app-notification-modal',

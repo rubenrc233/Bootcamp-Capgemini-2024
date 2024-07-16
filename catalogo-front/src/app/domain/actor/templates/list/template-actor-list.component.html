@@ -1,0 +1,22 @@
+<div class="actor-list-container">
+    <h1>Actors List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Surnames</th>
+          <th>Last update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let actor of vm.ActorList">
+          <td>{{ actor.actorId }}</td>
+          <td>{{ actor.firstName }}</td>
+          <td>{{ actor.lastName }}</td>
+          <td>{{ actor.lastUpdate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
