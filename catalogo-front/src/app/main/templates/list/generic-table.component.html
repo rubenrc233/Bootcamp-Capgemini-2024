@@ -8,7 +8,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of data">
-        <td *ngFor="let key of headers">{{ row[key] }}</td>
+        <td *ngFor="let key of headers">{{ row[key] }}  </td>
+        <button (click)="onDelete(row[headers[0]])"> Delete</button>
+
       </tr>
     </tbody>
   </table>

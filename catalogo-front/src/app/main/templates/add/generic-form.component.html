@@ -1,0 +1,15 @@
+<form #miForm="ngForm" class="row gy-2 gx-2 align-items-start">
+  <div class="form-floating col-md-4" *ngFor="let header of headers; let i = index; trackBy: trackByIndex">
+    <input
+      class="form-control"
+      type="text"
+      name={{header}}
+      id={{header}}
+    />
+    <label for={{header}} class="form-label">{{ header }}:</label>
+  </div>
+  <div class="col-12">
+    <button type="submit" (click)="onSubmit()">Submit</button>
+    <button type="button" (click)="onCancel()">Cancel</button>
+  </div>
+</form>

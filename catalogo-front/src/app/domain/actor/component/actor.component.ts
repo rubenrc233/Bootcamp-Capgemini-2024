@@ -1,7 +1,15 @@
-import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ActorViewModelService } from '../actor.service';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -10,7 +18,10 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { ErrorMessagePipe } from '../../../../pipes/cadenas.pipe';
-import { GenericTableComponent } from '../../../main/services/BaseEntity.service';
+import {
+  GenericTableComponent,
+  GenericFormComponent,
+} from '../../../main/services/BaseEntity.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -38,7 +49,7 @@ export class ActorsComponent implements OnInit, OnDestroy {
   templateUrl: '../templates/list/template-actor-list.component.html',
   styleUrls: ['../templates/list/template-actor-list.component.css'],
   standalone: true,
-  imports: [CommonModule,RouterLink, NgFor,GenericTableComponent],
+  imports: [CommonModule, RouterLink, NgFor, GenericTableComponent],
 })
 export class ActorsListComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
@@ -56,21 +67,53 @@ export class ActorsListComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'app-contactos-add',
+  selector: 'app-actor-add',
   templateUrl: '../templates/add/template-actor-add.component.html',
   styleUrls: ['../templates/add/template-actor-add.component.css'],
   standalone: true,
-  imports: [FormsModule,ErrorMessagePipe],
+  imports: [
+    FormsModule,
+    ErrorMessagePipe,
+    GenericTableComponent,
+    GenericFormComponent,
+  ],
 })
 export class ActorsAddComponent implements OnInit {
-  constructor(
-    protected vm: ActorViewModelService
-  ) {
-  }
+  headers = ['firstName', 'lastName'];
+  constructor(protected vm: ActorViewModelService) {}
   public get VM(): ActorViewModelService {
     return this.vm;
   }
+  handleCancel() {
+    this.VM.cancel();
+  }
+
+  handleSubmit() {
+    this.VM.send();
+  }
   ngOnInit(): void {
     this.vm.add();
+  }
+}
+
+@Component({
+  selector: 'app-actor-view',
+  templateUrl: '../templates/view/template-actor-view.component.html',
+  styleUrls: ['../templates/view/template-actor-view.component.css'],
+  standalone: true,
+  imports: [DatePipe],
+})
+export class ActorsViewComponent implements OnChanges {
+  @Input() id?: string;
+  constructor(protected vm: ActorViewModelService, protected router: Router) {}
+  public get VM(): ActorViewModelService {
+    return this.vm;
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.id) {
+      this.vm.view(+this.id);
+    } else {
+      this.router.navigate(['/404.html']);
+    }
   }
 }
