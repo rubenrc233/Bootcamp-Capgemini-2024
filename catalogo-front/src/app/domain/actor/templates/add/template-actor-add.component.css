@@ -21,7 +21,7 @@ h1 {
   font-weight: bold;
   color: #87cefa;
   padding: 10px;
-  border-bottom: 3px solid #87cefa;
+  border-bottom: 3px solid #0056b3;
   display: inline-block;
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -54,11 +54,11 @@ app-generic-form button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-right: 10px;
+  margin-right: 50px; /* Increased distance between buttons */
 }
 
 app-generic-form button:hover {
-  background-color: #87cefa;
+  background-color: #5a9bd4;
 }
 
 app-generic-form button.formCancel {
