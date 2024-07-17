@@ -16,6 +16,7 @@ import {
   Validators,
   ReactiveFormsModule,
   FormsModule,
+  NgForm,
 } from '@angular/forms';
 import { ErrorMessagePipe } from '../../../../pipes/cadenas.pipe';
 import { Subscription } from 'rxjs';
@@ -72,27 +73,36 @@ export class ActorsListComponent implements OnInit, OnDestroy {
     FormsModule,
     ErrorMessagePipe,
     GenericTableComponent,
-    GenericFormComponent,
+    GenericFormComponent,FormsModule,NgIf
   ],
 })
 export class ActorsAddComponent implements OnInit {
   headers = ['firstName', 'lastName'];
+
   constructor(protected vm: ActorViewModelService) {}
+
   public get VM(): ActorViewModelService {
     return this.vm;
   }
+
   handleCancel() {
     this.VM.cancel();
   }
 
-  handleSubmit() {
+  handleSubmit(formValue: any) {
+    const actor = {
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+    };
+
+    this.VM.setActor(actor);
     this.VM.send();
   }
+
   ngOnInit(): void {
     this.vm.add();
   }
 }
-
 @Component({
   selector: 'app-actor-view',
   templateUrl: '../templates/view/template-actor-view.component.html',
@@ -107,7 +117,6 @@ export class ActorsViewComponent implements OnInit {
   constructor(protected vm: ActorViewModelService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Recupera datos almacenados en localStorage al cargar la página
     const storedData = localStorage.getItem('actorData');
     if (storedData) {
       this.data = JSON.parse(storedData);

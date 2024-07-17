@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ActorViewModelService {
+  setActor(actor:any) {
+    this.actor = actor
+  }
   protected modo: ModoCRUD = 'list';
   protected actorList: Array<any> = [];
   protected actor: any = {};
@@ -97,7 +100,7 @@ export class ActorViewModelService {
         });
         break;
       case 'edit':
-        this.dao.change(this.idOriginal, this.actor).subscribe({
+        this.dao.change(this.idOriginal,this.actor).subscribe({
           next: () => this.cancel(),
           error: (err) => UtilitiesService.handleError(this.notify,this.router,err),
         });

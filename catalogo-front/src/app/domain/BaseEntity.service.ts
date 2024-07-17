@@ -1,7 +1,7 @@
 // generic-table.component.ts
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ErrorMessagePipe } from '../../pipes/cadenas.pipe';
 import { RouterLink } from '@angular/router';
 
@@ -38,17 +38,13 @@ export class GenericTableComponent {
 })
 export class GenericFormComponent {
   @Input() headers: string[] = [];
-  @Output() formSubmit: EventEmitter<any> = new EventEmitter();
-  @Output() formCancel: EventEmitter<void> = new EventEmitter();
+  @Output() formSubmit = new EventEmitter<any>();
+  @Output() formCancel = new EventEmitter<void>();
 
-  
-  trackByIndex(index: number, obj: any): any {
-    return index;
+  onSubmit(form: NgForm) {
+    this.formSubmit.emit(form.value);
   }
-  onSubmit() {
-    this.formSubmit.emit();
-  }
-  
+
   onCancel() {
     this.formCancel.emit();
   }

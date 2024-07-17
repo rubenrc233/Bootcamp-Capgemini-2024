@@ -1,7 +1,7 @@
-
-    <h1>Add new actor</h1>
-    @if(VM.Actor) {
-    <app-generic-form [headers]="headers" (formSubmit)="handleSubmit()" (formCancel)="handleCancel()"> </app-generic-form>
-    } @else {
-    <h2>No data</h2>
-}
+<h1>Add new actor</h1>
+<ng-container *ngIf="this.VM.Actor else noData">
+  <app-generic-form [headers]="headers" (formSubmit)="handleSubmit($event)" (formCancel)="handleCancel()"></app-generic-form>
+</ng-container>
+<ng-template #noData>
+  <h2>No data</h2>
+</ng-template>
