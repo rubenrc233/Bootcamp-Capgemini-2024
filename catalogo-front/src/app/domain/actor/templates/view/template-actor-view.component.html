@@ -1,1 +1,2 @@
-<app-generic-view [headers]="headers" [data]="data"></app-generic-view>
+<h1>Edit Actor</h1>
+  <app-generic-view [headers]="headers" [data]="data" (formSubmit)="handleSubmit($event)" (formCancel)="handleCancel()"></app-generic-view>

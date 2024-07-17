@@ -62,6 +62,7 @@ export class ActorsListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.vm.clear();
   }
+  
 }
 
 @Component({
@@ -111,15 +112,17 @@ export class ActorsAddComponent implements OnInit {
   imports: [DatePipe, GenericViewComponent],
 })
 export class ActorsViewComponent implements OnInit {
-  public headers: string[] = ['firstName', 'lastName', 'lastUpdate'];
+  public headers: string[] = ['firstName', 'lastName'];
   public data: string[] = [];
-
+  private currentId = 1;
   constructor(protected vm: ActorViewModelService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const storedData = localStorage.getItem('actorData');
     if (storedData) {
-      this.data = JSON.parse(storedData);
+      let values = JSON.parse(storedData);
+      this.data = values.slice(1)
+      this.currentId =  JSON.parse(storedData)[0]
     }
 
     this.route.paramMap.subscribe(params => {
@@ -143,5 +146,20 @@ export class ActorsViewComponent implements OnInit {
     if (actor) {
       this.data = [actor.id, actor.nombre, actor.apellidos];
     }
+  }
+  handleCancel() {
+    this.vm.cancel();
+  }
+
+  handleSubmit(formValue: any) {
+    this.vm.edit(this.currentId);
+    const actor = {
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      lastUpdate: Date.now()
+    };
+
+    this.vm.setActor(actor);
+    this.vm.send()
   }
 }

@@ -54,13 +54,25 @@ export class GenericFormComponent {
   selector: 'app-generic-view',
   templateUrl: '../main/templates/view/generic-view.component.html',
   standalone: true,
-  imports: [CommonModule,NgFor,FormsModule,NgIf,ErrorMessagePipe],
+  imports: [CommonModule, NgFor, FormsModule, NgIf],
   styleUrls: ['../main/templates/view/generic-view.component.css']
 })
 export class GenericViewComponent {
   @Input() headers: string[] = [];
   @Input() data: string[] = [];
+  @Output() formSubmit = new EventEmitter<any>();
+  @Output() formCancel = new EventEmitter<void>();
+
   trackByIndex(index: number, obj: any): any {
     return index;
   }
+
+  onSubmit() {
+    this.formSubmit.emit(this.data);
+  }
+
+  onCancel() {
+    this.formCancel.emit();
+  }
 }
+

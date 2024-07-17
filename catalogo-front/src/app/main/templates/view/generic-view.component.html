@@ -1,12 +1,27 @@
 <div class="container">
-  <div class="row">
-    <div class="form-floating col-md-4 mb-3" *ngFor="let header of headers; let i = index; trackBy: trackByIndex">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">{{ header }}</h5>
-          <p class="card-text">{{ data[i] }}</p>
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+    <div class="row">
+      <div class="form-floating col-md-4 mb-3" *ngFor="let header of headers; let i = index; trackBy: trackByIndex">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ header }}</h5>
+            <input
+              class="form-control"
+              type="text"
+              name="{{ header }}"
+              [(ngModel)]="data[i]"
+              id="{{ header }}"
+              required
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Edit</button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
 </div>
