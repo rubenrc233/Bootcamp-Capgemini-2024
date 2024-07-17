@@ -1,4 +1,3 @@
-<!-- generic-table.component.html -->
 <div class="generic-table-container">
   <table>
     <thead>
@@ -8,9 +7,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of data">
-        <td *ngFor="let key of headers">{{ row[key] }}  </td>
-        <button (click)="onDelete(row[headers[0]])"> Delete</button>
-
+        <td *ngFor="let key of headers">{{ row[key] }}</td>
+        <td>
+          <button (click)="onDelete(row[headers[0]])">Delete</button>
+          <button [routerLink]="[row[headers[0]]]">Details</button>
+        </td>
       </tr>
     </tbody>
   </table>

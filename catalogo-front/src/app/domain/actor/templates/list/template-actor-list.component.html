@@ -1,5 +1,5 @@
 <!-- actor-list.component.html -->
 <div class="actor-list-container">
   <h1>Actors List</h1>
-  <app-generic-table [headers]="headers" (deleteActor)="this.VM.delete($event)" [data]="this.VM.ActorList" ></app-generic-table>
+  <app-generic-table [headers]="headers" (delete)="this.VM.delete($event)" [data]="this.VM.ActorList" ></app-generic-table>
 </div>

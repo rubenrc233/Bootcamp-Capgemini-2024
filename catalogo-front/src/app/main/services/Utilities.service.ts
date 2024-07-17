@@ -2,7 +2,7 @@ import { HttpContextToken, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { NotificationService } from "./notification";
 
-export type ModoCRUD = 'v1' | 'add' | 'edit' | 'view' | 'delete';
+export type ModoCRUD = 'list' | 'add' | 'edit' | 'view' | 'delete';
 export const AUTH_REQUIRED = new HttpContextToken<boolean>(() => false);
 
 export abstract class UtilitiesService{

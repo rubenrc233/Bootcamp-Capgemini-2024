@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ActorViewModelService } from '../actor.service';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 import {
   FormBuilder,
@@ -18,11 +18,8 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { ErrorMessagePipe } from '../../../../pipes/cadenas.pipe';
-import {
-  GenericTableComponent,
-  GenericFormComponent,
-} from '../../../main/services/BaseEntity.service';
 import { Subscription } from 'rxjs';
+import { GenericFormComponent, GenericTableComponent, GenericViewComponent } from '../../BaseEntity.service';
 
 @Component({
   selector: 'app-actor',
@@ -101,19 +98,41 @@ export class ActorsAddComponent implements OnInit {
   templateUrl: '../templates/view/template-actor-view.component.html',
   styleUrls: ['../templates/view/template-actor-view.component.css'],
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, GenericViewComponent],
 })
-export class ActorsViewComponent implements OnChanges {
-  @Input() id?: string;
-  constructor(protected vm: ActorViewModelService, protected router: Router) {}
-  public get VM(): ActorViewModelService {
-    return this.vm;
+export class ActorsViewComponent implements OnInit {
+  public headers: string[] = ['firstName', 'lastName', 'lastUpdate'];
+  public data: string[] = [];
+
+  constructor(protected vm: ActorViewModelService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // Recupera datos almacenados en localStorage al cargar la página
+    const storedData = localStorage.getItem('actorData');
+    if (storedData) {
+      this.data = JSON.parse(storedData);
+    }
+
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.updateView(+id);
+      }
+    });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.id) {
-      this.vm.view(+this.id);
-    } else {
-      this.router.navigate(['/404.html']);
+
+  updateView(id: number): void {
+    this.vm.view(id);
+    setTimeout(() => {
+      this.setDataFromVM();
+      localStorage.setItem('actorData', JSON.stringify(this.data));
+    },50);
+  }
+
+  setDataFromVM(): void {
+    const actor = this.vm.Actor;
+    if (actor) {
+      this.data = [actor.id, actor.nombre, actor.apellidos];
     }
   }
 }

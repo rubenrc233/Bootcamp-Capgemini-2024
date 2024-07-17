@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ActorViewModelService {
-  protected modo: ModoCRUD = 'v1';
+  protected modo: ModoCRUD = 'list';
   protected actorList: Array<any> = [];
   protected actor: any = {};
   protected idOriginal: any = null;
-  protected listURL = '/actores/v1';
+  protected listURL = '';
 
   constructor(
     protected notify: NotificationService,
@@ -37,7 +37,7 @@ export class ActorViewModelService {
     this.dao.query().subscribe({
       next: (data) => {
         this.actorList = data;
-        this.modo = 'v1';
+        this.modo = 'list';
       },
       error: (err) => UtilitiesService.handleError(this.notify,this.router,err),
     });
@@ -63,6 +63,7 @@ export class ActorViewModelService {
   }
 
   public view(key: any): void {
+    console.log('ID recibido en el servicio:', key); // Verificar el ID en el servicio
     this.dao.get(key).subscribe({
       next: (data) => {
         this.actor = data;
@@ -113,6 +114,6 @@ export class ActorViewModelService {
 })
 export class ActorsDAOService extends RESTDAOService<any, any> {
   constructor() {
-    super('actores/v1');
+    super('');
   }
 }
