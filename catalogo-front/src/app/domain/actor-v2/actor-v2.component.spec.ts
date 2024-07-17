@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActorV2Component } from './actor-v2.component';
+import { ActorsV2ViewModelService } from './actor-v2.component';
 
 describe('ActorV2Component', () => {
-  let component: ActorV2Component;
-  let fixture: ComponentFixture<ActorV2Component>;
+  let component: ActorsV2ViewModelService;
+  let fixture: ComponentFixture<ActorsV2ViewModelService>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActorV2Component]
+      imports: [ActorsV2ViewModelService]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ActorV2Component);
+    fixture = TestBed.createComponent(ActorsV2ViewModelService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
